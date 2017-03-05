@@ -1,0 +1,184 @@
+---
+title: "Nomad Passport Index"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Visualising the World's Passports
+
+> The [Nomad Passport Index](http://nomadcapitalist.com/nomad-passport-index/) The Nomad Passport Index ranks 199 citizenships on five factors, more than any other passport index. It is designed to show the best citizenships in the world to hold on the basis of visa-free travel, international taxation, perception, dual citizenship, and personal freedom.
+
+The PDF report has a table of the rankings, I thought it would be nice to illustrate how to extract data from a PDF, since I have never tried it, and visualise the data since they are only presented in tabular format.
+
+## Working with PDFs
+
+To work with the PDF and extract the data, first we need the [`pdftools`](https://github.com/ropensci/pdftools) package from ROpenSci. This allows us to extract the text from the PDF and work with it. Getting started, install the `pdftools` package, if it is not already installed.
+
+```{r, eval=FALSE}
+install.packages("pdftools", dep = TRUE)
+```
+Next download the PDF report using `download.file()`.
+
+```{r download_pdf, eval = FALSE}
+download.file("https://s3-eu-west-1.amazonaws.com/nomadcapitalist/Nomad-Passport-Index-2017.pdf", mode = "wb", destfile = "~/Downloads/Nomad-Passport-Index-2017.pdf")
+```
+
+Import the PDF using `pdf_text()` from `pdf_tools`.
+```{r import_pdf}
+library(pdftools)
+NPI <- pdf_text("~/Downloads/Nomad-Passport-Index-2017.pdf")
+```
+
+The PDF data are arranged nicely in tabular format in the PDF but not for R. `pdf_text()` does a nice job of pulling the data out and it is pretty close to what we need but we end up with a character string with several elements.
+
+```{r view_NPI_text}
+NPI
+```
+
+Note that the table starts with the fifth element and goes to the seventeenth. Let us try to convert all the elements into a tibble using `read_table()`.
+
+```{r try_read_table_all, echo=FALSE}
+library(readr)
+NPI_table <- read_table(NPI[5:17], col_names = TRUE)
+```
+
+```{r NPI_table}
+NPI_table
+```
+
+There should be more than 15 rows. There are 200 in the original data. `readr::read_table` isn't handling the elements properly. So we can try using `plyr::ldply()` to convert all into a `tibble`.
+
+```{r ldply}
+library(plyr)
+NPI_table <- ldply(as.list(NPI[5:17]), read_table, col_names = FALSE)
+```
+Note that some of the messages indicate less columns for some elements than others?
+
+```{r}
+NPI_table
+```
+
+See line 63? St. Vincent and the Grenadines are split across two columns not one, this causes an extra nineth column to be added and things do not line up in the columns as they should. So, next, just for ease we will try parsing each element individually and then cleaning up the individual data frames to merge them.
+
+```{r make_table, message=FALSE}
+NPI_table1 <- read_table(NPI[5], col_names = FALSE, skip = 1)
+NPI_table1
+
+NPI_table2 <- read_table(NPI[6], col_names = FALSE)
+NPI_table2
+
+NPI_table3 <- read_table(NPI[7], col_names = FALSE)
+NPI_table3
+
+NPI_table4 <- read_table(NPI[8], col_names = FALSE)
+NPI_table4
+
+NPI_table5 <- read_table(NPI[9], col_names = FALSE)
+NPI_table5
+
+NPI_table6 <- read_table(NPI[10], col_names = FALSE)
+NPI_table6
+
+NPI_table7 <- read_table(NPI[11], col_names = FALSE)
+NPI_table7
+
+NPI_table8 <- read_table(NPI[12], col_names = FALSE)
+NPI_table8
+
+NPI_table9 <- read_table(NPI[13], col_names = FALSE)
+NPI_table9
+
+NPI_table10 <- read_table(NPI[14], col_names = FALSE)
+NPI_table10
+
+NPI_table11 <- read_table(NPI[15], col_names = FALSE)
+NPI_table11
+
+NPI_table12 <- read_table(NPI[16], col_names = FALSE)
+NPI_table12
+
+NPI_table13 <- read_table(NPI[17], col_names = FALSE)
+NPI_table13
+
+```
+
+Now we can see that NPI_tables 4, 10 and 11 need some attention. First we will correct `NPI_table4` and `NPI_table11` by merging columns 2 and 3 on line 15 and then removing column 3.
+
+```{r fix_NPI_table4}
+NPI_table4[15, 2] <- paste(NPI_table4[15, 2], NPI_table4[15, 3], collapse = "")
+NPI_table4 <- NPI_table4[, -3]
+
+NPI_table11[2, 2] <- paste(NPI_table11[2, 2], NPI_table11[2, 3], collapse = "")
+NPI_table11 <- NPI_table11[, -3]
+
+# name columns to match other tables
+names(NPI_table4) <- names(NPI_table11) <- names(NPI_table1)
+
+```
+
+Now we will fix `NPI_table10`. The "’" in Cote d’Ivoire is causing issues in parsing the text. Replace it with a "'" using `gsub()`.
+
+```{r fix_NPI_table10}
+NPI_table10[1, 2] <- gsub(pattern = "’", "'", NPI_table10[1, 2])
+```
+
+Using the `extract()` function from `tidyr` we will separate column 3 into the proper columns. Note the use of `[[:print:]]` in the last place of the `regexp`. This is because these numbers have decimals in them and the colum has spaces if there are no decimals.
+
+```{r extract_NPI_table10_cols}
+library(tidyr)
+NPI_table10 <-
+  tidyr::extract(NPI_table10,
+  X3,
+  into = c("X1", "X2", "X3", "X4", "X5", "X6"),
+  regex = "([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:print:]]+)")
+
+# name columns to match other tables
+names(NPI_table10) <- names(NPI_table1)
+
+# While we are here, note that Angola has a typo in the third column, it is 455 when it should be 55, fix that now.
+
+NPI_table10[11, 3] <- 55
+
+```
+Now we can use `rbind` to join the tables together into one.
+
+```{r rbind_tables}
+
+NPI_table <- rbind(NPI_table1,
+                   NPI_table2,
+                   NPI_table3,
+                   NPI_table4,
+                   NPI_table5,
+                   NPI_table6,
+                   NPI_table7,
+                   NPI_table8,
+                   NPI_table9,
+                   NPI_table10,
+                   NPI_table11,
+                   NPI_table12,
+                   NPI_table13)
+
+names(NPI_table) <- c("Rank", "Country", "VFT", "T", "P", "DC", "F", "Total")
+```
+
+There is still a (T) in the first column to indicate ties. Using `gsub()` remove this.
+
+```{r remove_T}
+NPI_table[[1]] <- gsub(pattern = "\\(T\\)", "", NPI_table[[1]])
+```
+
+Now let us set the type in the table. The first column, "Rank", will be set to factor. The second, "Country" is already character so no change is necessary. The third through the eighth should be numeric.
+
+```{r set_type}
+NPI_table[[1]] <- as.factor(NPI_table[[1]])
+NPI_table[, 3:8] <- tibble::as_tibble(lapply(NPI_table[, 3:8], as.numeric))
+NPI_table
+```
+
+Now the data are completely ingested and cleaned up and we can start visualising them.
+
+## Visualising
+
