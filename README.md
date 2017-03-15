@@ -912,7 +912,94 @@ NPI_table
     ## 10      8  Luxembourg   172    30    40    50    50 106.0
     ## # ... with 189 more rows
 
+We'll be using the Natural Earth Data for the shapefile to map these data. To do this we will left join the data using the country names. However, the Nomad Passport Index names do not all agree with the Natural Earth data, so we will fix that here before proceeding.
+
+``` r
+NPI_table[NPI_table == "Central African Republic"] <- "Central African Rep."
+NPI_table[NPI_table == "Cote d'Ivoire"] <- "Côte d'Ivoire"
+NPI_table[NPI_table == "Dem. Rep. of Congo"] <- "Dem. Rep. Congo"
+NPI_table[NPI_table == "Republic of Congo"] <- "Congo"
+NPI_table[NPI_table == "Dominican Republic"] <- "Dominican Rep."
+NPI_table[NPI_table == "Equatorial Guinea"] <- "Eq. Guinea"
+NPI_table[NPI_table == "Laos"] <- "Lao PDR"
+NPI_table[NPI_table == "South Sudan"] <- "S. Sudan"
+NPI_table[NPI_table == "Solomon Islands"] <- "Solomon Is."
+NPI_table[NPI_table == "North Korea"] <- "Dem. Rep. Korea"
+NPI_table[NPI_table == "South Korea"] <- "Korea"
+```
+
 Now the data are completely ingested and cleaned up and we can start visualising them.
 
 Visualising
 -----------
+
+Using the ROpenSci package `rnaturalearth` we can map these data.
+
+``` r
+# devtools::install_packages("ropensci/rnaturalearth")
+library(rnaturalearth)
+```
+
+Get a global map of all countries.
+
+``` r
+global <- ne_countries(scale = 110, type = "countries")
+```
+
+Convert the Natural Earth data to a data frame so that it can be joined with the passport index data. To do this we'll use `fortify()` from `ggplot2` and specify the region to be "name", which is the name of the country in the shapefile. We can then use this to join the data with other data, including data originally in the shapefile that's lost when fortifying.
+
+``` r
+library(ggplot2)
+global@data$id <- rownames(global@data)
+global_df <- fortify(global, region = "name")
+```
+
+Since Antarctica doesn't have a passport, we can remove it and tidy up the final map. We'll subset the data removing anything below -60 Latitude. -60 will leave all the countries in the Southern hemisphere while removing Antarctica.
+
+``` r
+global_df <- global_df[global_df$lat >= -60, ]
+```
+
+Use `dplyr::left_join` to join the data for mapping. First, join with the original data from the Natural Earth shapefile, and second with the Nomad Passport Index data.
+
+``` r
+library(dplyr)
+```
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:plyr':
+    ## 
+    ##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+    ##     summarize
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
+global_df <- left_join(global_df, global@data, c("id" = "name"))
+global_df <- left_join(global_df, NPI_table, c("id" = "Country"))
+```
+
+``` r
+global_df$Rank <- as.numeric(global_df$Rank)
+```
+
+Plotting
+--------
+
+Now that the data are all assembled, we can start graphing and mapping. We'll use `ggplot2`, which we already loaded for the `fortify()` function to turn the original spatial object into a normal data frame.
+
+``` r
+ggplot(global_df, aes(long, lat)) +
+  geom_polygon(aes(group = group, fill = Rank)) +
+  coord_map()
+```
+
+![](README_files/figure-markdown_github/plot-1.png)
