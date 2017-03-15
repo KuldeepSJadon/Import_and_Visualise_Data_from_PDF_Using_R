@@ -917,6 +917,7 @@ We'll be using the Natural Earth Data for the shapefile to map these data. To do
 ``` r
 NPI_table[NPI_table == "Central African Republic"] <- "Central African Rep."
 NPI_table[NPI_table == "Cote d'Ivoire"] <- "Côte d'Ivoire"
+NPI_table[NPI_table == "Czech Republic"] <- "Czech Rep."
 NPI_table[NPI_table == "Dem. Rep. of Congo"] <- "Dem. Rep. Congo"
 NPI_table[NPI_table == "Republic of Congo"] <- "Congo"
 NPI_table[NPI_table == "Dominican Republic"] <- "Dominican Rep."
