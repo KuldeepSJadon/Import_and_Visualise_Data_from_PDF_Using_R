@@ -721,6 +721,8 @@ ggplot(global_df, aes(long, lat)) +
 
 ![](README_files/figure-markdown_github/plot-1.png)
 
+Lighter colours (smaller numbers) indicate a more desirable passport, darker colours (larger numbers) indicate less desirable.
+
 ### More graphs
 
 Let's look at the NPI rank by continent starting with Africa. We'll subset the `global_df` data frame to create a new data frame that includes only data for Africa and make a point graph of that data.
@@ -758,8 +760,6 @@ ggplot(global_df, aes(x = as.factor(continent), y = Rank)) +
     xlab("Continent")
 ```
 
-    ## Warning: Removed 241 rows containing non-finite values (stat_ydensity).
-
 ![](README_files/figure-markdown_github/violin_plots-1.png)
 
 As another way to look at the data, we can plot countries' rank by the income group. Here we'll use violin plots with points over the top.
@@ -771,16 +771,12 @@ ggplot(global_df, aes(x = income_grp, y = Rank)) +
   scale_color_viridis(option = "plasma", direction = -1) +
   theme_solarized(light = FALSE) +
   xlab("Income Group") +
-  theme(axis.text.x = element_text(size = 7,
+  theme(axis.text.x = element_text(size = 8,
                                    angle = 45,
                                    hjust = 1))
 ```
 
-    ## Warning: Removed 241 rows containing non-finite values (stat_ydensity).
-
-    ## Warning: Removed 241 rows containing missing values (geom_point).
-
-![](README_files/figure-markdown_github/gdp_rank-1.png)
+![](README_files/figure-markdown_github/economic_rank-1.png)
 
 Wrap up
 -------

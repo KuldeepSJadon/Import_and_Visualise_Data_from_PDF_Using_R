@@ -253,7 +253,6 @@ head(global_df)
 
 All good, now we're ready to start visualising the data
 
-
 ## Visualising
 
 ### First a map
@@ -276,6 +275,8 @@ ggplot(global_df, aes(long, lat)) +
           subtitle = "2017") +
   coord_map(projection = "mollweide")
 ```
+
+Lighter colours (smaller numbers) indicate a more desirable passport, darker colours (larger numbers) indicate less desirable.
 
 ### More graphs
 
@@ -301,7 +302,7 @@ ggplot(Africa_df, aes(x = as.factor(id), y = Rank)) +
 
 We can see the frequency of ranking by continent using a violin plot. Looking at the map above, Africa and Asia it looks like they have lower ranked passports in general than other continents.
 
-```{r, violin_plots}
+```{r, violin_plots, message=FALSE, warning=FALSE}
 # first remove the open ocean "continent" so it does not appear on the graph
 global_df <- global_df[global_df$continent != "Seven seas (open ocean)", ]
 
@@ -314,14 +315,14 @@ ggplot(global_df, aes(x = as.factor(continent), y = Rank)) +
 
 As another way to look at the data, we can plot countries' rank by the income group. Here we'll use violin plots with points over the top.
 
-```{r, gdp_rank, message=FALSE}
+```{r, economic_rank, message=FALSE, warning=FALSE}
 ggplot(global_df, aes(x = income_grp, y = Rank)) +
   geom_violin(fill = "#666666", colour = "#666666") +
   geom_point(aes(colour = Rank)) +
   scale_color_viridis(option = "plasma", direction = -1) +
   theme_solarized(light = FALSE) +
   xlab("Income Group") +
-  theme(axis.text.x = element_text(size = 7,
+  theme(axis.text.x = element_text(size = 8,
                                    angle = 45,
                                    hjust = 1))
 ```
