@@ -12,7 +12,7 @@ Working with PDFs
 
 To work with the PDF and extract the data, first we need the [`pdftools`](https://github.com/ropensci/pdftools) package from ROpenSci. This allows us to extract the text from the PDF and work with it. Getting started, install the `pdftools` package, if it is not already installed.
 
-``` r
+``` reval
 install.packages("pdftools", dep = TRUE)
 ```
 
@@ -540,12 +540,8 @@ Using the ROpenSci package `rnaturalearth` we can map these data.
 devtools::install_github("ropenscilabs/rnaturalearth")
 ```
 
-    ## Downloading GitHub repo ropenscilabs/rnaturalearth@master
-    ## from URL https://api.github.com/repos/ropenscilabs/rnaturalearth/zipball/master
-
-    ## Installing rnaturalearth
-
-    ## '/usr/local/Cellar/r/3.3.3/R.framework/Resources/bin/R' CMD INSTALL '/private/var/folders/rd/q9rk3h4j77gd7qg9dw8_mj9m0000gn/T/RtmpwzboU1/devtoolsa95c70304a27/ropenscilabs-rnaturalearth-16abe11'
+    ## Skipping install of 'rnaturalearth' from a github remote, the SHA1 (16abe11d) has not changed since last install.
+    ##   Use `force = TRUE` to force installation
 
 ``` r
 library(rnaturalearth)
@@ -618,6 +614,8 @@ global_df[global_df == "Solomon Is."] <- "Solomon Islands"
 global_df[global_df == "Dem. Rep. Korea"] <- "North Korea"
 global_df[global_df == "Korea"] <- "South Korea"
 ```
+
+Now join the data from the PDF with the spatial data frame.
 
 ``` r
 global_df <- left_join(global_df, NPI_table, c("id" = "Country"))
@@ -729,7 +727,7 @@ ggplot(global_df, aes(long, lat)) +
   coord_map(projection = "mollweide")
 ```
 
-![](README_files/figure-markdown_github/plot-1.png)
+![](README_files/figure-markdown_github/map-1.png)
 
 Lighter colours (smaller numbers) indicate a more desirable passport, darker colours (larger numbers) indicate less desirable.
 
@@ -791,58 +789,56 @@ ggplot(global_df, aes(x = income_grp, y = Rank)) +
 
 ![](README_files/figure-markdown_github/economic_rank-1.png)
 
-        ## Wrap up
-        
-        There are plenty of other ways to look at the data. The Natural Earth Data include GDP, economy and subregions and the Nomad Passport Index has several factors that go into the ranking that can be included as well. I hope that you've found this useful as an example of how to extract data and join it with geographic data and visualise it.
-        
-        Thanks to the package maintainers for the fantastic packages that made this sort of work possible with R.
-        
-        # References
-        Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0.
-        https://CRAN.R-project.org/package=ggthemes
-        Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4.
-        https://CRAN.R-project.org/package=viridis
-        Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0.
-        https://CRAN.R-project.org/package=pdftools
-        H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009.
-        Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29.     URL http://www.jstatsoft.org/v40/i01/.
-        Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0.
-        https://CRAN.R-project.org/package=dplyr
-        Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0.
-        https://CRAN.R-project.org/package=readr
-        
-        # R System Information
-        
-        
-        ```
-        ## R version 3.3.3 (2017-03-06)
-        ## Platform: x86_64-apple-darwin16.4.0 (64-bit)
-        ## Running under: macOS Sierra 10.12.3
-        ## 
-        ## locale:
-        ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
-        ## 
-        ## attached base packages:
-        ## [1] stats     graphics  grDevices utils     datasets  methods   base     
-        ## 
-        ## other attached packages:
-        ## [1] ggthemes_3.4.0      viridis_0.3.4       dplyr_0.5.0        
-        ## [4] ggplot2_2.2.1       rnaturalearth_0.1.0 tidyr_0.6.1        
-        ## [7] plyr_1.8.4          readr_1.0.0         pdftools_1.0       
-        ## 
-        ## loaded via a namespace (and not attached):
-        ##  [1] Rcpp_0.12.9          git2r_0.18.0         tools_3.3.3         
-        ##  [4] digest_0.6.12        pkgbuild_0.0.0.9000  pkgload_0.0.0.9000  
-        ##  [7] evaluate_0.10        memoise_1.0.0        tibble_1.2          
-        ## [10] gtable_0.2.0         lattice_0.20-34      DBI_0.6             
-        ## [13] mapproj_1.2-4        curl_2.3             yaml_2.1.14         
-        ## [16] rgdal_1.2-5          gridExtra_2.2.1      withr_1.0.2         
-        ## [19] httr_1.2.1.9000      stringr_1.2.0        knitr_1.15.1        
-        ## [22] maps_3.1.1           rgeos_0.3-22         devtools_1.12.0.9000
-        ## [25] rprojroot_1.2        grid_3.3.3           R6_2.2.0            
-        ## [28] foreign_0.8-67       rmarkdown_1.3.9004   sp_1.2-4            
-        ## [31] callr_1.0.0.9000     magrittr_1.5         backports_1.0.5     
-        ## [34] scales_0.4.1         htmltools_0.3.5      maptools_0.9-1      
-        ## [37] assertthat_0.1       colorspace_1.3-2     labeling_0.3        
-        ## [40] stringi_1.1.2        lazyeval_0.2.0       munsell_0.4.3
-        ```
+It is interesting and perhaps not surprising to see that the desireability is closely correlated with income.
+
+Wrap up
+-------
+
+There are plenty of other ways to look at the data. The Natural Earth Data include GDP, economy and subregions and the Nomad Passport Index has several factors that go into the ranking that can be included as well. I hope that you've found this useful as an example of how to extract data and join it with geographic data and visualise it.
+
+Thanks to the package maintainers for the fantastic packages that made this sort of work possible with R.
+
+References
+==========
+
+Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0. <https://CRAN.R-project.org/package=ggthemes>
+Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4. <https://CRAN.R-project.org/package=viridis>
+Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0. <https://CRAN.R-project.org/package=pdftools>
+Hadley Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009.
+Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL <http://www.jstatsoft.org/v40/i01/>
+Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0. <https://CRAN.R-project.org/package=dplyr>
+Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0. <https://CRAN.R-project.org/package=readr>
+
+R System Information
+====================
+
+    ## R version 3.3.3 (2017-03-06)
+    ## Platform: x86_64-apple-darwin16.4.0 (64-bit)
+    ## Running under: macOS Sierra 10.12.3
+    ## 
+    ## locale:
+    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ## [1] ggthemes_3.4.0      viridis_0.3.4       dplyr_0.5.0        
+    ## [4] ggplot2_2.2.1       rnaturalearth_0.1.0 tidyr_0.6.1        
+    ## [7] plyr_1.8.4          readr_1.0.0         pdftools_1.0       
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] Rcpp_0.12.9          git2r_0.18.0         tools_3.3.3         
+    ##  [4] digest_0.6.12        pkgbuild_0.0.0.9000  pkgload_0.0.0.9000  
+    ##  [7] evaluate_0.10        memoise_1.0.0        tibble_1.2          
+    ## [10] gtable_0.2.0         lattice_0.20-34      DBI_0.6             
+    ## [13] mapproj_1.2-4        curl_2.3             yaml_2.1.14         
+    ## [16] rgdal_1.2-5          gridExtra_2.2.1      withr_1.0.2         
+    ## [19] httr_1.2.1.9000      stringr_1.2.0        knitr_1.15.1        
+    ## [22] maps_3.1.1           rgeos_0.3-22         devtools_1.12.0.9000
+    ## [25] rprojroot_1.2        grid_3.3.3           R6_2.2.0            
+    ## [28] foreign_0.8-67       rmarkdown_1.3.9004   sp_1.2-4            
+    ## [31] magrittr_1.5         backports_1.0.5      scales_0.4.1        
+    ## [34] htmltools_0.3.5      maptools_0.9-1       assertthat_0.1      
+    ## [37] colorspace_1.3-2     labeling_0.3         stringi_1.1.2       
+    ## [40] lazyeval_0.2.0       munsell_0.4.3
