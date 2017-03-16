@@ -1,12 +1,11 @@
-Nomad Passport Index
+Visualising the World's Passports
 ================
 
-Visualising the World's Passports
-=================================
+![](README_files/figure-markdown_github/plot-1.png)
 
 > The [Nomad Passport Index](http://nomadcapitalist.com/nomad-passport-index/) The Nomad Passport Index ranks 199 citizenships on five factors, more than any other passport index. It is designed to show the best citizenships in the world to hold on the basis of visa-free travel, international taxation, perception, dual citizenship, and personal freedom.
 
-The PDF report has a table of the rankings, I thought it would be nice to illustrate how to extract data from a PDF, since I have never tried it, and visualise the data since they are only presented in tabular format.
+The PDF report has a table of the rankings, I thought it would be nice to illustrate how to extract data from a PDF, since I have never tried it, and visualise the data since they are only presented in tabular format. In this document I will show you how to extract data from a PDF and convert it into a data frame, use various [`tidyverse`](http://tidyverse.org) packages to clean up, organise and merge the data, download and import geographic data using the [`rnaturalearth`](https://github.com/ropenscilabs/rnaturalearth) and join the data using [`dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)for plotting using [`ggplot2`](http://ggplot2.org) including a map (see above), a scatter plot and some violin plots of the data. I hope that you find this useful.
 
 Working with PDFs
 -----------------
@@ -23,7 +22,9 @@ Next download the PDF report using `download.file()`.
 download.file("https://s3-eu-west-1.amazonaws.com/nomadcapitalist/Nomad-Passport-Index-2017.pdf", mode = "wb", destfile = "~/Downloads/Nomad-Passport-Index-2017.pdf")
 ```
 
-Import the PDF using `pdf_text()` from `pdf_tools`.
+### Import the PDF data
+
+Import the PDF using `pdf_text()` from `pdftools`.
 
 ``` r
 library(pdftools)
@@ -37,7 +38,7 @@ NPI
 ```
 
     ##  [1] ""                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-    ##  [2] "ABOUT THIS INDEX\nNomad Capitalist was founded by perpetual traveler, entrepreneur, and investor\nAndrew Henderson in 2012 to share his “notes from the field” about living, doing\nbusiness, and investing overseas. Since then, www.nomadcapitalist.com has\nbecome the most-visited website on the topic of international diversification,\nattracting more than three million unique visitors per year.\nNomad Capitalist assists six- and seven-figure entrepreneurs to legally reduce their\nbusiness and income taxes by relocating overseas, obtain residence permits and\ncitizenships in other countries for diversification, and invest in fast-growing\ninternational markets to grow their wealth faster.\nThe Nomad Passport Index was designed to educate global citizens about the true\nvalue of the world’s citizenships. While most indexes compare only a passport\nholder’s ability to travel freely, we realized that citizens of different countries deal\nwith far different requirements to pay tax, live freely, and avoid scrutiny when\ntraveling. This index is designed to show the true value of citizenship in each\ncountry from the perspective of a high-achieving citizen who wants the freedom to\nminimize his or her tax obligations, diversify his or her wealth, and travel freely\nwithout judgment.\nMETHODOLOGY\nThe Nomad Passport Index ranks the value of citizenship in and, by extension the\npassport of, 199 countries and territories in the world based on five factors:\n• Visa-free travel - 50% of ranking\n• Taxation - 30% of ranking\n• Perception - 10% of ranking\n• Dual citizenship - 10% of ranking\n• Overall freedom - 10% of ranking\nEach country’s value in each category is given the indicated weighting to achieve a\ncountry’s total score using the formula ((Visa Free Travel x 0.5) + (Taxation x 0.3)\n+ (Perception x 0.1) + (Dual Citizenship x 0.1) + (Overall Freedom x 0.1)).\n                             1 | www.nomadcapitalist.com\n"                                                                                                                                                                                                                                                                                                                               
+    ##  [2] "ABOUT THIS INDEX\nNomad Capitalist was founded by perpetual traveler, entrepreneur, and investor\nAndrew Henderson in 2012 to share his “notes from the field” about living, doing\nbusiness, and investing overseas. Since then, www.nomadcapitalist.com has\nbecome the most-visited website on the topic of international diversification,\nattracting more than three million unique visitors per year.\nNomad Capitalist assists six- and seven-figure entrepreneurs to legally reduce their\nbusiness and income taxes by relocating overseas, obtain residence permits and\ncitizenships in other countries for diversification, and invest in fast-growing\ninternational markets to grow their wealth faster.\nThe Nomad Passport Index was designed to educate global citizens about the true\nvalue of the world’s citizenships. While most indexes compare only a passport\nholder’s ability to travel freely, we realized that citizens of different countries deal\nwith far different requirements to pay tax, live freely, and avoid scrutiny when\ntraveling. This index is designed to show the true value of citizenship in each\ncountry from the perspective of a high-achieving citizen who wants the freedom to\nminimize his or her tax obligations, diversify his or her wealth, and travel freely\nwithout judgment.\nMETHODOLOGY\nThe Nomad Passport Index ranks the value of citizenship in and, by extension the\npassport of, 199 countries and territories in the world based on five factors:\n• Visa-free travel - 50% of ranking\n• Taxation - 20% of ranking\n• Perception - 10% of ranking\n• Dual citizenship - 10% of ranking\n• Overall freedom - 10% of ranking\nEach country’s value in each category is given the indicated weighting to achieve a\ncountry’s total score using the formula ((Visa Free Travel x 0.5) + (Taxation x 0.2)\n+ (Perception x 0.1) + (Dual Citizenship x 0.1) + (Overall Freedom x 0.1)).\n                             1 | www.nomadcapitalist.com\n"                                                                                                                                                                                                                                                                                                                               
     ##  [3] "The Index is the result of aggregating data from more than one dozen sources\nbased on priorities Nomad Capitalist believes to be important to citizens of a\ncountry and to individuals considering citizenship in a given country. For more\ninformation, watch this video.\nVISA-FREE TRAVEL\nThe most important factor in the value of a passport is the travel opportunities it\naffords. The Nomad Passport Index places the highest priority on visa-free travel,\nwhich is responsible for 50% of each country’s total ranking. This index relied on\ndata from the IATA, the Henley Visa Restrictions Index, and news sources to\ndetermine each country’s score, which is the number of countries that allow visa-\nfree access or a straightforward e-visa or visa on arrival process to holders of each\ncountry’s passport. For example, Germany scores highest with 177 countries.\nTAXATION\nThe second most important factor in the value of a passport is tax freedom, which\nis responsible for 30% of each country’s total ranking. We believe that no one\nshould be forced to pay tax by virtue of their citizenship alone. This index relied on\ndata from our personal experience with clients, our network of tax advisors around\nthe world, and each country’s tax agency or embassy, to determine how non-\nresident citizens are taxed. Each country was assigned a score from 10 to 50; for\nexample, the United States and Eritrea scored lowest with 10, while Monaco and\nothers scored highest with 50:\n• 10 = citizens are taxed on their worldwide income no matter where they lived\n• 20 = citizens may avoid taxation by moving overseas, but with difficulty\n• 30 = citizens may avoid taxation by moving overseas, without much difficulty\n• 40 = citizens are not taxed on foreign source income no matter where they live\n• 50 = citizens are not taxed on any income no matter where they live\nPERCEPTION\nThe world’s perception of a country and its citizens are responsible for 10% of\neach country’s total ranking. Each country’s passport is as valuable as it is able to\nbe used freely and keep its holders safe. This index relied on the World Happiness\nReport, the Human Development Index, and subjective factors based on our\n                            2 | www.nomadcapitalist.com\n"
     ##  [4] "personal experience with clients to determine how each country and its citizens are\nreceived. Each country was assigned a score from 10 to 50. A ranking if 10 was\ngiven to countries whose citizens are refused entry to a substantial number of\ncountries and/or whose citizens encounter substantial hostility. A ranking of 50 was\ngiven to countries ranked among the happiest in the world and whose citizens\nexperience minimal hostility. Rankings of 20, 30, and 40 were given as\nintermediate rankings.\nDUAL CITIZENSHIP\nThe ability to maintain other citizenships alongside that of the ranked country is\nresponsible for 10% of each country’s total ranking. We believe that everyone\nshould be free to hold dual or multiple citizenships without restriction. This index\nrelied on data from each country’s embassy when available, various internet\nsources when not available, and our personal experiences with our global network,\nto determine how free citizens of each country are to hold other nationalities. Each\ncountry was assigned a score from 10 to 50:\n• 10 = citizens are strictly forbidden to hold other citizenships\n• 20 = citizens are forbidden to hold other citizenships, but this is often unenforced\n• 30 = citizens may hold only one other citizenship and/or other restrictions\n• 40 = citizens are often allowed to hold other citizenships\n• 50 = citizens are almost always allowed to hold other citizenships\nFREEDOM\nThe ability of citizens to live freely is responsible for 10% of each country’s total\nranking. We believe that freedom of speech and of the press is a good thing, and\nimposing laws on non-resident citizens is generally a bad idea. This index relied on\ndata regarding mandatory military service, government spying programs,\nincarceration rate, and laws targeting non-resident citizens (such as the United\nStates’ Foreign Corrupt Practices Act), as well as the World Press Freedom Index\nand Economic Freedom Index to determine how free citizens of each country are,\nparticularly non-resident citizens. Each country was assigned a score from 10 to 50\nbased on our proprietary blend of these factors, with 10 being the least free and 50\nbeing the most free.\n                              3 | www.nomadcapitalist.com\n"     
     ##  [5] "Rank  Country     VFT   T  P DC   F Total\n1     Sweden       176 30 50  50 50   109\n2     Belgium      174 30 50  50 50   108\n3(T)  Italy        175 30 40  50 50 107.5\n3(T)  Spain        175 30 40  50 50 107.5\n5     Ireland      172 30 50  50 50   107\n6(T)  Finland      175 20 50  50 50 106.5\n6(T)  Germany      177 30 40  40 40 106.5\n8(T)  Denmark      174 30 50  40 40   106\n8(T)  Switzerland  172 30 50  50 40   106\n8(T)  Luxembourg   172 30 40  50 50   106\n11(T) France       175 30 40  50 30 105.5\n11(T) New Zealand  171 30 50  50 40 105.5\n13    Portugal     172 30 30  50 50   105\n14(T) Canada       172 20 50  50 40   104\n14(T) Netherlands  174 30 50  10 50   104\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
@@ -53,6 +54,8 @@ NPI
     ## [15] "160(T) India                    52 20 30 10 20   36\n160(T) Central African Republic 48 20 30 30 20   36\n160(T) Djibouti                 44 40 30 20 10   36\n163    Vietnam                  47 30 30 20 10 35.5\n164(T) Uzbekistan               52 20 30 10 10   35\n164(T) China                    50 20 30 10 20   35\n166(T) Egypt                    49 20 20 30 10 34.5\n166(T) Gabon                    49 20 20 20 20 34.5\n166(T) Sri Lanka                39 30 30 40 20 34.5\n169(T) Chad                     49 20 20 10 20 33.5\n169(T) Laos                     47 30 20 10 10 33.5\n169(T) Liberia                  43 30 20 10 30 33.5\n169(T) Lebanon                  39 40 20 10 30 33.5\n173(T) Algeria                  48 20 20 20 10   33\n173(T) Burundi                  42 20 20 30 20   32\n175(T) Turkmenistan             49 20 10 10 10 31.5\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     ## [16] "175(T) Cameroon              45 20 20 10 20 31.5\n175(T) Equatorial Guinea     45 20 20 20 10 31.5\n175(T) Bangladesh            39 30 30 10 20 31.5\n175(T) Nepal                 37 30 30 10 30 31.5\n180(T) Myanmar               42 30 20 10 10   31\n180(T) Guinea                46 20 20 10 10   31\n182(T) Nigeria               45 20 10 20 10 30.5\n182(T) Dem. Rep. of Congo    39 40 10 10 10 30.5\n184(T) Republic of Congo     44 20 20 10 10   30\n184(T) Kosovo                38 20 20 20 30   30\n186    Palestinian Territory 37 30 10 20 20 29.5\n187(T) Ethiopia              37 20 30 10 20 28.5\n187(T) Somalia               31 50 10 10 10 28.5\n189(T) North Korea           42 20 10 10 10   28\n189(T) South Sudan           38 20 10 20 20   28\n191    Iran                  37 30 10 10 10 27.5\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     ## [17] "192    Sudan       37 20 10 20 10 26.5\n193(T) Yemen       38 20 10 10 10   26\n193(T) Syria       32 30 10 20 10   26\n195    Libya       36 20 10 10 10   25\n196    Pakistan    29 20 20 20 20 24.5\n197    Eritrea     37 10 10 10 10 23.5\n198    Iraq        30 20 10 20 10   23\n199    Afghanistan 25 20 10 10 20 20.5\n"
+
+### First attempts at organising the PDF data
 
 Note that the table starts with the fifth element and goes to the seventeenth. Let us try to convert all the elements into a tibble using `read_table()`.
 
@@ -93,421 +96,34 @@ NPI_table
 
 There should be more than 15 rows. There are 200 in the original data. `readr::read_table` isn't handling the elements properly. So we can try using `plyr::ldply()` to convert all into a `tibble`.
 
+### Try using plyr to read the table
+
 ``` r
 library(plyr)
 NPI_table <- ldply(as.list(NPI[5:17]), read_table, col_names = FALSE)
 ```
 
-Note that some of the messages indicate less columns for some elements than others?
+Note that some of the messages indicate less columns for some elements than others? I've not shown the entire table in this document just for brevity, but have a look at `NPI_table` to see what's going on.
 
 ``` r
-NPI_table
+NPI_table[60:65, ]
 ```
 
-    ##         X1                     X2                   X3   X4   X5   X6   X7
-    ## 1     Rank                Country                  VFT    T    P   DC    F
-    ## 2        1                 Sweden                  176   30   50   50   50
-    ## 3        2                Belgium                  174   30   50   50   50
-    ## 4     3(T)                  Italy                  175   30   40   50   50
-    ## 5     3(T)                  Spain                  175   30   40   50   50
-    ## 6        5                Ireland                  172   30   50   50   50
-    ## 7     6(T)                Finland                  175   20   50   50   50
-    ## 8     6(T)                Germany                  177   30   40   40   40
-    ## 9     8(T)                Denmark                  174   30   50   40   40
-    ## 10    8(T)            Switzerland                  172   30   50   50   40
-    ## 11    8(T)             Luxembourg                  172   30   40   50   50
-    ## 12   11(T)                 France                  175   30   40   50   30
-    ## 13   11(T)            New Zealand                  171   30   50   50   40
-    ## 14      13               Portugal                  172   30   30   50   50
-    ## 15   14(T)                 Canada                  172   20   50   50   40
-    ## 16   14(T)            Netherlands                  174   30   50   10   50
-    ## 17   16(T)         United Kingdom                  175   20   40   50   30
-    ## 18   16(T)              Australia                  169   20   50   50   50
-    ## 19      18                  Malta                  168   30   30   50   50
-    ## 20   19(T)                  Japan                  173   30   40   10   50
-    ## 21   19(T)              Singapore                  173   40   40   10   30
-    ## 22   19(T)         Czech Republic                  167   30   30   50   50
-    ## 23   19(T)                Iceland                  167   30   30   50   50
-    ## 24   23(T)                Austria                  173   30   40   10   40
-    ## 25   23(T)                 Greece                  171   20   30   50   40
-    ## 26   23(T)                Hungary                  167   30   30   50   40
-    ## 27   23(T)               Slovakia                  165   30   30   50   50
-    ## 28      27          Liechtenstein                  164   30   30   50   50
-    ## 29      28                 Latvia                  163   30   30   50   50
-    ## 30   29(T)            South Korea                  172   30   40   10   30
-    ## 31   29(T)                 Norway                  172   20   50   10   40
-    ## 32   29(T)               Malaysia                  164   40   30   20   50
-    ## 33   29(T)                Estonia                  162   30   30   50   50
-    ## 34   29(T)                 Monaco                  160   50   40   10   50
-    ## 35      34                 Poland                  161   30   30   50   50
-    ## 36   35(T)          United States                  174   10   20   40   30
-    ## 37   35(T)               Slovenia                  164   30   30   20   50
-    ## 38      37                  Chile                  155   30   40   50   50
-    ## 39   38(T)                 Cyprus                  159   30   30   50   30
-    ## 40   38(T)               Bulgaria                  153   30   40   50   50
-    ## 41   40(T)              Hong Kong                  154   40   40   20   50
-    ## 42   40(T)              Lithuania                  162   30   30   10   50
-    ## 43      42                Romania                  153   30   30   50   50
-    ## 44   43(T)             San Marino                  156   30   30   10   50
-    ## 45   43(T)              Argentina                  152   30   30   50   30
-    ## 46   45(T)                 Brazil                  153   20   40   50   30
-    ## 47   45(T)                 Brunei                  151   50   20   10   40
-    ## 48   47(T)                Andorra                  152   30   30   20   50
-    ## 49   47(T)                Bahamas                       140   50   30   40
-    ## 50      49                Croatia                       149   20   30   50
-    ## 51   50(T)               Holy See                       134   50   40   20
-    ## 52   50(T)    St. Kitts and Nevis                       132   50   30   40
-    ## 53      52               Barbados                       141   30   30   50
-    ## 54   53(T)                 Israel                       147   20   10   50
-    ## 55   53(T)                Uruguay                       137   30   30   40
-    ## 56      55                 Mexico                       139   30   40   30
-    ## 57      56             Seychelles                       133   40   30   20
-    ## 58      57             Costa Rica                       131   40   30   20
-    ## 59      58    Antigua and Barbuda                       134   20   30   30
-    ## 60   59(T)                 Taiwan                       137   30   30   20
-    ## 61   59(T)                 Panama                       127   40   30   20
-    ## 62   59(T)              St. Lucia                       125   30   30   50
-    ## 63   62(T)    St. Vincent and the           Grenadines  125   30   30   30
-    ## 64   62(T)               Honduras                       119   40   30   40
-    ## 65      64              Mauritius                  128   30   30   10   50
-    ## 66   65(T)               Paraguay                  125   30   30   50   20
-    ## 67   65(T)               Dominica                  119   30   30   50   50
-    ## 68      67    Trinidad and Tobago                  130   20   30   10   50
-    ## 69      68                Grenada                  121   20   30   50   50
-    ## 70      69                Vanuatu                  110   50   30   40   50
-    ## 71   70(T)              Venezuela                  132   20   30   20   10
-    ## 72   70(T)   United Arab Emirates                  122   50   30   10   10
-    ## 73      72                  Macao                  120   30   30   10   50
-    ## 74      73                 Serbia                  115   30   30   40   40
-    ## 75   74(T)              Guatemala                  116   40   30   20   20
-    ## 76   74(T)              Nicaragua                  110   40   30   20   50
-    ## 77   76(T)              Macedonia                  111   30   30   40   40
-    ## 78   76(T)             Montenegro                  107   30   30   50   50
-    ## 79      78                  Samoa                  112   30   30   10   50
-    ## 80      79                  Tonga                  110   30   30   10   50
-    ## 81      80                  Palau                  104   40   30   10   50
-    ## 82      81            El Salvador                  115   20   30   20   20
-    ## 83      82                 Russia                  105   30   20   30   20
-    ## 84   83(T)                Albania                   98   30   30   40   30
-    ## 85   83(T)                Georgia                   94   40   30   30   40
-    ## 86   85(T)               Colombia                  103   20   30   40   20
-    ## 87   85(T) Bosnia and Herzegovina                  101   30   20   30   30
-    ## 88   85(T)                Moldova                  101   30   30   30   20
-    ## 89   88(T)                 Turkey                  102   30   20   40   10
-    ## 90   88(T)                 Belize                   94   40   30   30   30
-    ## 91      90           South Africa                   97   30   30   30   10
-    ## 92   91(T)                   Peru                   86   30   30   40   40
-    ## 93   91(T)                 Tuvalu                   82   40   30   30   50
-    ## 94      93                  Nauru                   80   40   30   30   50
-    ## 95      94                 Kuwait                   82   50   30   10   30
-    ## 96      95        Solomon Islands                   86   30   30   10   40
-    ## 97      96       Marshall Islands                   79   40   30   10   50
-    ## 98   97(T)                   Fiji                   81   30   30   30   30
-    ## 99   97(T)                  Qatar                   79   50   30   10   20
-    ## 100  99(T)               Maldives                   80   40   30   10   30
-    ## 101  99(T)               Suriname                   74   30   30   50   40
-    ## 102    101               Kiribati                   79   30   30   10   50
-    ## 103    102             Micronesia                   75   40   30   10   40
-    ## 104 103(T)                Jamaica                   78   20   30   30   40
-    ## 105 103(T)               Botswana                   72   40   30   10   50
-    ## 106 105(T)       Papua New Guinea                   77   30   30   20   30
-    ## 107 105(T)                Bahrain                   73   50   30   10   20
-    ## 108 105(T)                   Oman                   71   50   30   10   30
-    ## 109 108(T)                 Guyana                   82   20   30   10   30
-    ## 110 108(T)            Timor-Leste                   82   20   30   10   30
-    ## 111 108(T)                Namibia                   70   40   30   20   40
-    ## 112    111               Thailand                   71   40   30   30   20
-    ## 113    112                Ecuador                   81   20   30   10   20
-    ## 114 113(T)                Ukraine                   81   20   20   20   10
-    ## 115 113(T)                Lesotho                   69   40   30   10   30
-    ## 116 113(T)           Saudi Arabia                   69   50   30   10   10
-    ## 117    116                Bolivia                   72   20   30   40   20
-    ## 118    117                 Malawi                   67   40   30   10   30
-    ## 119 118(T)              Swaziland                   67   30   30   40   10
-    ## 120 118(T)                 Zambia                   63   40   30   30   20
-    ## 121    120                  Kenya                   68   20   30   30   20
-    ## 122 121(T)             Kazakhstan                   67   30   30   10   20
-    ## 123 121(T)               Tanzania                   65   20   30   20   30
-    ## 124 121(T)                Tunisia                   65   20   30   30   20
-    ## 125 121(T)             Cape Verde                   61   30   30   30   20
-    ## 126 121(T)            Philippines                   61   40   30   20   10
-    ## 127 126(T)                  Ghana                   64   20   30   20   30
-    ## 128 126(T)                 Uganda                   60   30   30   30   20
-    ## 129 126(T)                Morocco                   60   30   30   30   20
-    ## 130 129(T)                Belarus                   67   30   20   10   10
-    ## 131 129(T)                 Gambia                   67   20   20   20   20
-    ## 132    131     Dominican Republic                   54   30   30   40   30
-    ## 133    132                Armenia                   57   30   30   30   20
-    ## 134    133             Azerbaijan                   62   30   30   10   10
-    ## 135    134                  Benin                   60   20   30   20   20
-    ## 136    135                 Bhutan                   51   40   30   10   30
-    ## 137 136(T)                   Cuba                   60   30   20   10   10
-    ## 138 136(T)              Indonesia                   58   30   30   10   10
-    ## 139 136(T)           Burkina Faso                   56   20   30   20   30
-    ## 140 136(T)               Mongolia                   56   30   30   10   20
-    ## 141 140(T)                   Togo                   55   20   30   20   30
-    ## 142 140(T)             Tajikistan                   53   30   30   30   10
-    ## 143 140(T)                Comoros                   47   30   20   40   40
-    ## 144 143(T)             Kyrgyzstan                   58   20   30   10   20
-    ## 145 143(T)          Cote d’Ivoire  56 20 20 30 20   39 <NA> <NA> <NA> <NA>
-    ## 146 143(T)  Sao Tome and Principe  54 20 30 20 30   39 <NA> <NA> <NA> <NA>
-    ## 147 143(T)               Cambodia  50 30 30 30 20   39 <NA> <NA> <NA> <NA>
-    ## 148 147(T)                  Niger  55 20 30 10 30 38.5 <NA> <NA> <NA> <NA>
-    ## 149 147(T)                Senegal  55 20 30 20 20 38.5 <NA> <NA> <NA> <NA>
-    ## 150 147(T)          Guinea-Bissau  51 20 30 50 10 38.5 <NA> <NA> <NA> <NA>
-    ## 151 147(T)             Mozambique  51 30 30 20 20 38.5 <NA> <NA> <NA> <NA>
-    ## 152 147(T)           Sierra Leone  51 30 20 20 30 38.5 <NA> <NA> <NA> <NA>
-    ## 153    152               Zimbabwe  60 20 20 10 10   38 <NA> <NA> <NA> <NA>
-    ## 154 153(T)             Mauritania  55 20 30 10 20 37.5 <NA> <NA> <NA> <NA>
-    ## 155 153(T)                 Angola 455 40 30 20 20 37.5 <NA> <NA> <NA> <NA>
-    ## 156 155(T)                   Mali  52 20 30 30 10   37 <NA> <NA> <NA> <NA>
-    ## 157 155(T)                  Haiti  48 20 20 30 40   37 <NA> <NA> <NA> <NA>
-    ## 158 155(T)             Madagascar  48 30 30 10 30   37 <NA> <NA> <NA> <NA>
-    ## 159 155(T)                 Rwanda  48 30 30 20 20   37 <NA> <NA> <NA> <NA>
-    ## 160    159                 Jordan  47 30 30 20 20 36.5 <NA> <NA> <NA> <NA>
-    ## 161 160(T)                  India                        52   20   30   10
-    ## 162 160(T)        Central African             Republic   48   20   30   30
-    ## 163 160(T)               Djibouti                        44   40   30   20
-    ## 164    163                Vietnam                        47   30   30   20
-    ## 165 164(T)             Uzbekistan                        52   20   30   10
-    ## 166 164(T)                  China                        50   20   30   10
-    ## 167 166(T)                  Egypt                        49   20   20   30
-    ## 168 166(T)                  Gabon                        49   20   20   20
-    ## 169 166(T)              Sri Lanka                        39   30   30   40
-    ## 170 169(T)                   Chad                        49   20   20   10
-    ## 171 169(T)                   Laos                        47   30   20   10
-    ## 172 169(T)                Liberia                        43   30   20   10
-    ## 173 169(T)                Lebanon                        39   40   20   10
-    ## 174 173(T)                Algeria                        48   20   20   20
-    ## 175 173(T)                Burundi                        42   20   20   30
-    ## 176 175(T)           Turkmenistan                        49   20   10   10
-    ## 177 175(T)               Cameroon                   45   20   20   10   20
-    ## 178 175(T)      Equatorial Guinea                   45   20   20   20   10
-    ## 179 175(T)             Bangladesh                   39   30   30   10   20
-    ## 180 175(T)                  Nepal                   37   30   30   10   30
-    ## 181 180(T)                Myanmar                   42   30   20   10   10
-    ## 182 180(T)                 Guinea                   46   20   20   10   10
-    ## 183 182(T)                Nigeria                   45   20   10   20   10
-    ## 184 182(T)     Dem. Rep. of Congo                   39   40   10   10   10
-    ## 185 184(T)      Republic of Congo                   44   20   20   10   10
-    ## 186 184(T)                 Kosovo                   38   20   20   20   30
-    ## 187    186  Palestinian Territory                   37   30   10   20   20
-    ## 188 187(T)               Ethiopia                   37   20   30   10   20
-    ## 189 187(T)                Somalia                   31   50   10   10   10
-    ## 190 189(T)            North Korea                   42   20   10   10   10
-    ## 191 189(T)            South Sudan                   38   20   10   20   20
-    ## 192    191                   Iran                   37   30   10   10   10
-    ## 193    192                  Sudan                   37   20   10   20   10
-    ## 194 193(T)                  Yemen                   38   20   10   10   10
-    ## 195 193(T)                  Syria                   32   30   10   20   10
-    ## 196    195                  Libya                   36   20   10   10   10
-    ## 197    196               Pakistan                   29   20   20   20   20
-    ## 198    197                Eritrea                   37   10   10   10   10
-    ## 199    198                   Iraq                   30   20   10   20   10
-    ## 200    199            Afghanistan                   25   20   10   10   20
-    ##        X8   X9
-    ## 1   Total   NA
-    ## 2     109   NA
-    ## 3     108   NA
-    ## 4   107.5   NA
-    ## 5   107.5   NA
-    ## 6     107   NA
-    ## 7   106.5   NA
-    ## 8   106.5   NA
-    ## 9     106   NA
-    ## 10    106   NA
-    ## 11    106   NA
-    ## 12  105.5   NA
-    ## 13  105.5   NA
-    ## 14    105   NA
-    ## 15    104   NA
-    ## 16    104   NA
-    ## 17  103.5   NA
-    ## 18  103.5   NA
-    ## 19    103   NA
-    ## 20  102.5   NA
-    ## 21  102.5   NA
-    ## 22  102.5   NA
-    ## 23  102.5   NA
-    ## 24  101.5   NA
-    ## 25  101.5   NA
-    ## 26  101.5   NA
-    ## 27  101.5   NA
-    ## 28    101   NA
-    ## 29  100.5   NA
-    ## 30    100   NA
-    ## 31    100   NA
-    ## 32    100   NA
-    ## 33    100   NA
-    ## 34    100   NA
-    ## 35   99.5   NA
-    ## 36     98   NA
-    ## 37     98   NA
-    ## 38   97.5   NA
-    ## 39   96.5   NA
-    ## 40   96.5   NA
-    ## 41     96   NA
-    ## 42     96   NA
-    ## 43   95.5   NA
-    ## 44     93   NA
-    ## 45     93   NA
-    ## 46   92.5   NA
-    ## 47   92.5   NA
-    ## 48     92   NA
-    ## 49     50 92.0
-    ## 50     50 91.5
-    ## 51     50 88.0
-    ## 52     50 88.0
-    ## 53     30 87.5
-    ## 54     30 86.5
-    ## 55     50 86.5
-    ## 56     30 85.5
-    ## 57     50 84.5
-    ## 58     50 83.5
-    ## 59     50 82.0
-    ## 60     20 81.5
-    ## 61     50 81.5
-    ## 62     50 81.5
-    ## 63     50 79.5
-    ## 64     50 79.5
-    ## 65     79   NA
-    ## 66   78.5   NA
-    ## 67   78.5   NA
-    ## 68     78   NA
-    ## 69   77.5   NA
-    ## 70     77   NA
-    ## 71     76   NA
-    ## 72     76   NA
-    ## 73     75   NA
-    ## 74   74.5   NA
-    ## 75     73   NA
-    ## 76     73   NA
-    ## 77   72.5   NA
-    ## 78   72.5   NA
-    ## 79     71   NA
-    ## 80     70   NA
-    ## 81     69   NA
-    ## 82   68.5   NA
-    ## 83   65.5   NA
-    ## 84     65   NA
-    ## 85     65   NA
-    ## 86   64.5   NA
-    ## 87   64.5   NA
-    ## 88   64.5   NA
-    ## 89     64   NA
-    ## 90     64   NA
-    ## 91   61.5   NA
-    ## 92     60   NA
-    ## 93     60   NA
-    ## 94     59   NA
-    ## 95     58   NA
-    ## 96     57   NA
-    ## 97   56.5   NA
-    ## 98   55.5   NA
-    ## 99   55.5   NA
-    ## 100    55   NA
-    ## 101    55   NA
-    ## 102  54.5   NA
-    ## 103  53.5   NA
-    ## 104    53   NA
-    ## 105    53   NA
-    ## 106  52.5   NA
-    ## 107  52.5   NA
-    ## 108  52.5   NA
-    ## 109    52   NA
-    ## 110    52   NA
-    ## 111    52   NA
-    ## 112  51.5   NA
-    ## 113  50.5   NA
-    ## 114  49.5   NA
-    ## 115  49.5   NA
-    ## 116  49.5   NA
-    ## 117    49   NA
-    ## 118  48.5   NA
-    ## 119  47.5   NA
-    ## 120  47.5   NA
-    ## 121    46   NA
-    ## 122  45.5   NA
-    ## 123  44.5   NA
-    ## 124  44.5   NA
-    ## 125  44.5   NA
-    ## 126  44.5   NA
-    ## 127    44   NA
-    ## 128    44   NA
-    ## 129    44   NA
-    ## 130  43.5   NA
-    ## 131  43.5   NA
-    ## 132    43   NA
-    ## 133  42.5   NA
-    ## 134    42   NA
-    ## 135    41   NA
-    ## 136  40.5   NA
-    ## 137    40   NA
-    ## 138    40   NA
-    ## 139    40   NA
-    ## 140    40   NA
-    ## 141  39.5   NA
-    ## 142  39.5   NA
-    ## 143  39.5   NA
-    ## 144    39   NA
-    ## 145  <NA>   NA
-    ## 146  <NA>   NA
-    ## 147  <NA>   NA
-    ## 148  <NA>   NA
-    ## 149  <NA>   NA
-    ## 150  <NA>   NA
-    ## 151  <NA>   NA
-    ## 152  <NA>   NA
-    ## 153  <NA>   NA
-    ## 154  <NA>   NA
-    ## 155  <NA>   NA
-    ## 156  <NA>   NA
-    ## 157  <NA>   NA
-    ## 158  <NA>   NA
-    ## 159  <NA>   NA
-    ## 160  <NA>   NA
-    ## 161    20 36.0
-    ## 162    20 36.0
-    ## 163    10 36.0
-    ## 164    10 35.5
-    ## 165    10 35.0
-    ## 166    20 35.0
-    ## 167    10 34.5
-    ## 168    20 34.5
-    ## 169    20 34.5
-    ## 170    20 33.5
-    ## 171    10 33.5
-    ## 172    30 33.5
-    ## 173    30 33.5
-    ## 174    10 33.0
-    ## 175    20 32.0
-    ## 176    10 31.5
-    ## 177  31.5   NA
-    ## 178  31.5   NA
-    ## 179  31.5   NA
-    ## 180  31.5   NA
-    ## 181    31   NA
-    ## 182    31   NA
-    ## 183  30.5   NA
-    ## 184  30.5   NA
-    ## 185    30   NA
-    ## 186    30   NA
-    ## 187  29.5   NA
-    ## 188  28.5   NA
-    ## 189  28.5   NA
-    ## 190    28   NA
-    ## 191    28   NA
-    ## 192  27.5   NA
-    ## 193  26.5   NA
-    ## 194    26   NA
-    ## 195    26   NA
-    ## 196    25   NA
-    ## 197  24.5   NA
-    ## 198  23.5   NA
-    ## 199    23   NA
-    ## 200  20.5   NA
+    ##       X1                  X2         X3  X4 X5 X6 X7 X8   X9
+    ## 60 59(T)              Taiwan            137 30 30 20 20 81.5
+    ## 61 59(T)              Panama            127 40 30 20 50 81.5
+    ## 62 59(T)           St. Lucia            125 30 30 50 50 81.5
+    ## 63 62(T) St. Vincent and the Grenadines 125 30 30 30 50 79.5
+    ## 64 62(T)            Honduras            119 40 30 40 50 79.5
+    ## 65    64           Mauritius        128  30 30 10 50 79   NA
 
-See line 63? St. Vincent and the Grenadines are split across two columns not one, this causes an extra nineth column to be added and things do not line up in the columns as they should. So, next, just for ease we will try parsing each element individually and then cleaning up the individual data frames to merge them.
+See line 63? St. Vincent and the Grenadines are split across two columns not one, this causes an extra ninth column to be added and things do not line up in the columns as they should.
+
+### The Solution! Read the data in chunks
+
+Note that the initial import shows that the data are indexed, e.g. `[1]...` and so on. We can use that and try parsing each element individually and then cleaning up the individual data frames to merge them.
+
+For the first table, we won't use any column names and we'll skip the first line and assign names after everything is assembled.
 
 ``` r
 NPI_table1 <- read_table(NPI[5], col_names = FALSE, skip = 1)
@@ -845,7 +461,7 @@ Now we will fix `NPI_table10`. The "’" in Cote d’Ivoire is causing issues in
 NPI_table10[1, 2] <- gsub(pattern = "’", "'", NPI_table10[1, 2])
 ```
 
-Using the `extract()` function from `tidyr` we will separate column 3 into the proper columns. Note the use of `[[:print:]]` in the last place of the `regexp`. This is because these numbers have decimals in them and the colum has spaces if there are no decimals.
+Using the `extract()` function from `tidyr` we will separate column 3 into the proper columns. Note the use of `[[:print:]]` in the last place of the `regexp`. This is because these numbers have decimals in them and the column has spaces if there are no decimals.
 
 ``` r
 library(tidyr)
@@ -889,50 +505,34 @@ There is still a (T) in the first column to indicate ties. Using `gsub()` remove
 NPI_table[[1]] <- gsub(pattern = "\\(T\\)", "", NPI_table[[1]])
 ```
 
-Now let us set the type in the table. The first column, "Rank", will be set to factor. The second, "Country" is already character so no change is necessary. The third through the eighth should be numeric.
+Now let us set the type in the table. The first column, "Rank" and third through the eighth should be numeric. The second, "Country" is already character so no change is necessary.
 
 ``` r
-NPI_table[[1]] <- as.factor(NPI_table[[1]])
-NPI_table[, 3:8] <- tibble::as_tibble(lapply(NPI_table[, 3:8], as.numeric))
+NPI_table[, c(1, 3:8)] <- tibble::as_tibble(lapply(NPI_table[, c(1, 3:8)], as.numeric))
 NPI_table
 ```
 
     ## # A tibble: 199 × 8
-    ##      Rank     Country   VFT     T     P    DC     F Total
-    ## *  <fctr>       <chr> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-    ## 1       1      Sweden   176    30    50    50    50 109.0
-    ## 2       2     Belgium   174    30    50    50    50 108.0
-    ## 3       3       Italy   175    30    40    50    50 107.5
-    ## 4       3       Spain   175    30    40    50    50 107.5
-    ## 5       5     Ireland   172    30    50    50    50 107.0
-    ## 6       6     Finland   175    20    50    50    50 106.5
-    ## 7       6     Germany   177    30    40    40    40 106.5
-    ## 8       8     Denmark   174    30    50    40    40 106.0
-    ## 9       8 Switzerland   172    30    50    50    40 106.0
-    ## 10      8  Luxembourg   172    30    40    50    50 106.0
+    ##     Rank     Country   VFT     T     P    DC     F Total
+    ## *  <dbl>       <chr> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+    ## 1      1      Sweden   176    30    50    50    50 109.0
+    ## 2      2     Belgium   174    30    50    50    50 108.0
+    ## 3      3       Italy   175    30    40    50    50 107.5
+    ## 4      3       Spain   175    30    40    50    50 107.5
+    ## 5      5     Ireland   172    30    50    50    50 107.0
+    ## 6      6     Finland   175    20    50    50    50 106.5
+    ## 7      6     Germany   177    30    40    40    40 106.5
+    ## 8      8     Denmark   174    30    50    40    40 106.0
+    ## 9      8 Switzerland   172    30    50    50    40 106.0
+    ## 10     8  Luxembourg   172    30    40    50    50 106.0
     ## # ... with 189 more rows
 
-We'll be using the Natural Earth Data for the shapefile to map these data. To do this we will left join the data using the country names. However, the Nomad Passport Index names do not all agree with the Natural Earth data, so we will fix that here before proceeding.
-
-``` r
-NPI_table[NPI_table == "Central African Republic"] <- "Central African Rep."
-NPI_table[NPI_table == "Cote d'Ivoire"] <- "Côte d'Ivoire"
-NPI_table[NPI_table == "Czech Republic"] <- "Czech Rep."
-NPI_table[NPI_table == "Dem. Rep. of Congo"] <- "Dem. Rep. Congo"
-NPI_table[NPI_table == "Republic of Congo"] <- "Congo"
-NPI_table[NPI_table == "Dominican Republic"] <- "Dominican Rep."
-NPI_table[NPI_table == "Equatorial Guinea"] <- "Eq. Guinea"
-NPI_table[NPI_table == "Laos"] <- "Lao PDR"
-NPI_table[NPI_table == "South Sudan"] <- "S. Sudan"
-NPI_table[NPI_table == "Solomon Islands"] <- "Solomon Is."
-NPI_table[NPI_table == "North Korea"] <- "Dem. Rep. Korea"
-NPI_table[NPI_table == "South Korea"] <- "Korea"
-```
+Getting geographic data to help us visulalise these rankings
+------------------------------------------------------------
 
 Now the data are completely ingested and cleaned up and we can start visualising them.
 
-Visualising
------------
+### Using `rnatualearthdata`
 
 Using the ROpenSci package `rnaturalearth` we can map these data.
 
@@ -947,7 +547,9 @@ Get a global map of all countries.
 global <- ne_countries(scale = 110, type = "countries")
 ```
 
-Convert the Natural Earth data to a data frame so that it can be joined with the passport index data. To do this we'll use `fortify()` from `ggplot2` and specify the region to be "name", which is the name of the country in the shapefile. We can then use this to join the data with other data, including data originally in the shapefile that's lost when fortifying.
+### Create a data frame that we can use more easily
+
+We'll now convert the Natural Earth data to a data frame so that it can be joined with the passport index data. To do this we'll use `fortify()` from `ggplot2` and specify the region to be "name", which is the name of the country in the shapefile. We can then use this to join the data with other data, including data originally in the shapefile that's lost when fortifying.
 
 ``` r
 library(ggplot2)
@@ -960,6 +562,8 @@ Since Antarctica doesn't have a passport, we can remove it and tidy up the final
 ``` r
 global_df <- global_df[global_df$lat >= -60, ]
 ```
+
+### Joining the rankings with the Natual Earth data
 
 Use `dplyr::left_join` to join the data for mapping. First, join with the original data from the Natural Earth shapefile, and second with the Nomad Passport Index data.
 
@@ -985,22 +589,238 @@ library(dplyr)
 
 ``` r
 global_df <- left_join(global_df, global@data, c("id" = "name"))
-global_df <- left_join(global_df, NPI_table, c("id" = "Country"))
+```
+
+In order to join the data, we need to change some of the country names so that the formats agree between the two data sets. Easily done by looking at the map to see which countries don't have data, but do exist in both data sets and make the corrections below. I've already looked at the map without making these changes and am not showing that step.
+
+``` r
+global_df[global_df == "Bosnia and Herz."] <- "Bosnia and Herzegovina"
+global_df[global_df == "Central African Rep."] <- "Central African Republic"
+global_df[global_df == "Côte d'Ivoire"] <- "Cote d'Ivoire"
+global_df[global_df == "Czech Rep."] <- "Czech Republic"
+global_df[global_df == "Dem. Rep. Congo"] <- "Dem. Rep. of Congo"
+global_df[global_df == "Congo"] <- "Republic of Congo"
+global_df[global_df == "Dominican Rep."] <- "Dominican Republic"
+global_df[global_df == "Eq. Guinea"] <- "Equatorial Guinea"
+global_df[global_df == "Lao PDR"] <- "Laos"
+global_df[global_df == "S. Sudan"] <- "South Sudan"
+global_df[global_df == "Solomon Is."] <- "Solomon Islands"
+global_df[global_df == "Dem. Rep. Korea"] <- "North Korea"
+global_df[global_df == "Korea"] <- "South Korea"
 ```
 
 ``` r
-global_df$Rank <- as.numeric(global_df$Rank)
+global_df <- left_join(global_df, NPI_table, c("id" = "Country"))
+head(global_df)
 ```
 
-Plotting
---------
+    ##       long      lat order  hole piece          id         group scalerank
+    ## 1 61.21082 35.65007     1 FALSE     1 Afghanistan Afghanistan.1         1
+    ## 2 62.23065 35.27066     2 FALSE     1 Afghanistan Afghanistan.1         1
+    ## 3 62.98466 35.40404     3 FALSE     1 Afghanistan Afghanistan.1         1
+    ## 4 63.19354 35.85717     4 FALSE     1 Afghanistan Afghanistan.1         1
+    ## 5 63.98290 36.00796     5 FALSE     1 Afghanistan Afghanistan.1         1
+    ## 6 64.54648 36.31207     6 FALSE     1 Afghanistan Afghanistan.1         1
+    ##        featurecla labelrank  sovereignt sov_a3 adm0_dif level
+    ## 1 Admin-0 country         3 Afghanistan    AFG        0     2
+    ## 2 Admin-0 country         3 Afghanistan    AFG        0     2
+    ## 3 Admin-0 country         3 Afghanistan    AFG        0     2
+    ## 4 Admin-0 country         3 Afghanistan    AFG        0     2
+    ## 5 Admin-0 country         3 Afghanistan    AFG        0     2
+    ## 6 Admin-0 country         3 Afghanistan    AFG        0     2
+    ##                type       admin adm0_a3 geou_dif     geounit gu_a3 su_dif
+    ## 1 Sovereign country Afghanistan     AFG        0 Afghanistan   AFG      0
+    ## 2 Sovereign country Afghanistan     AFG        0 Afghanistan   AFG      0
+    ## 3 Sovereign country Afghanistan     AFG        0 Afghanistan   AFG      0
+    ## 4 Sovereign country Afghanistan     AFG        0 Afghanistan   AFG      0
+    ## 5 Sovereign country Afghanistan     AFG        0 Afghanistan   AFG      0
+    ## 6 Sovereign country Afghanistan     AFG        0 Afghanistan   AFG      0
+    ##       subunit su_a3 brk_diff   name_long brk_a3    brk_name brk_group
+    ## 1 Afghanistan   AFG        0 Afghanistan    AFG Afghanistan      <NA>
+    ## 2 Afghanistan   AFG        0 Afghanistan    AFG Afghanistan      <NA>
+    ## 3 Afghanistan   AFG        0 Afghanistan    AFG Afghanistan      <NA>
+    ## 4 Afghanistan   AFG        0 Afghanistan    AFG Afghanistan      <NA>
+    ## 5 Afghanistan   AFG        0 Afghanistan    AFG Afghanistan      <NA>
+    ## 6 Afghanistan   AFG        0 Afghanistan    AFG Afghanistan      <NA>
+    ##   abbrev postal                    formal_en formal_fr note_adm0 note_brk
+    ## 1   Afg.     AF Islamic State of Afghanistan      <NA>      <NA>     <NA>
+    ## 2   Afg.     AF Islamic State of Afghanistan      <NA>      <NA>     <NA>
+    ## 3   Afg.     AF Islamic State of Afghanistan      <NA>      <NA>     <NA>
+    ## 4   Afg.     AF Islamic State of Afghanistan      <NA>      <NA>     <NA>
+    ## 5   Afg.     AF Islamic State of Afghanistan      <NA>      <NA>     <NA>
+    ## 6   Afg.     AF Islamic State of Afghanistan      <NA>      <NA>     <NA>
+    ##     name_sort name_alt mapcolor7 mapcolor8 mapcolor9 mapcolor13  pop_est
+    ## 1 Afghanistan     <NA>         5         6         8          7 28400000
+    ## 2 Afghanistan     <NA>         5         6         8          7 28400000
+    ## 3 Afghanistan     <NA>         5         6         8          7 28400000
+    ## 4 Afghanistan     <NA>         5         6         8          7 28400000
+    ## 5 Afghanistan     <NA>         5         6         8          7 28400000
+    ## 6 Afghanistan     <NA>         5         6         8          7 28400000
+    ##   gdp_md_est pop_year lastcensus gdp_year                   economy
+    ## 1      22270       NA       1979       NA 7. Least developed region
+    ## 2      22270       NA       1979       NA 7. Least developed region
+    ## 3      22270       NA       1979       NA 7. Least developed region
+    ## 4      22270       NA       1979       NA 7. Least developed region
+    ## 5      22270       NA       1979       NA 7. Least developed region
+    ## 6      22270       NA       1979       NA 7. Least developed region
+    ##      income_grp wikipedia fips_10 iso_a2 iso_a3 iso_n3 un_a3 wb_a2 wb_a3
+    ## 1 5. Low income        NA    <NA>     AF    AFG    004   004    AF   AFG
+    ## 2 5. Low income        NA    <NA>     AF    AFG    004   004    AF   AFG
+    ## 3 5. Low income        NA    <NA>     AF    AFG    004   004    AF   AFG
+    ## 4 5. Low income        NA    <NA>     AF    AFG    004   004    AF   AFG
+    ## 5 5. Low income        NA    <NA>     AF    AFG    004   004    AF   AFG
+    ## 6 5. Low income        NA    <NA>     AF    AFG    004   004    AF   AFG
+    ##   woe_id adm0_a3_is adm0_a3_us adm0_a3_un adm0_a3_wb continent region_un
+    ## 1     NA        AFG        AFG         NA         NA      Asia      Asia
+    ## 2     NA        AFG        AFG         NA         NA      Asia      Asia
+    ## 3     NA        AFG        AFG         NA         NA      Asia      Asia
+    ## 4     NA        AFG        AFG         NA         NA      Asia      Asia
+    ## 5     NA        AFG        AFG         NA         NA      Asia      Asia
+    ## 6     NA        AFG        AFG         NA         NA      Asia      Asia
+    ##       subregion  region_wb name_len long_len abbrev_len tiny homepart id.y
+    ## 1 Southern Asia South Asia       11       11          4   NA        1    0
+    ## 2 Southern Asia South Asia       11       11          4   NA        1    0
+    ## 3 Southern Asia South Asia       11       11          4   NA        1    0
+    ## 4 Southern Asia South Asia       11       11          4   NA        1    0
+    ## 5 Southern Asia South Asia       11       11          4   NA        1    0
+    ## 6 Southern Asia South Asia       11       11          4   NA        1    0
+    ##   Rank VFT  T  P DC  F Total
+    ## 1  199  25 20 10 10 20  20.5
+    ## 2  199  25 20 10 10 20  20.5
+    ## 3  199  25 20 10 10 20  20.5
+    ## 4  199  25 20 10 10 20  20.5
+    ## 5  199  25 20 10 10 20  20.5
+    ## 6  199  25 20 10 10 20  20.5
+
+All good, now we're ready to start visualising the data
+
+Visualising
+-----------
+
+### First a map
 
 Now that the data are all assembled, we can start graphing and mapping. We'll use `ggplot2`, which we already loaded for the `fortify()` function to turn the original spatial object into a normal data frame.
 
+Using the awesome [viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) library to supply the colour scheme of the map and [ggthemes](https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html) for the plot theme let's map the passport index rank and use a Mollweide projection to make things look nice and keep Greenland from being too large.
+
 ``` r
+library(viridis)
+library(ggthemes)
+
 ggplot(global_df, aes(long, lat)) +
   geom_polygon(aes(group = group, fill = Rank)) +
-  coord_map()
+  scale_fill_viridis(option = "plasma", direction = -1) +
+  theme_solarized(light = FALSE) +
+  theme(axis.title = element_blank(),
+      axis.text = element_blank(),
+      axis.ticks = element_blank()) +
+  ggtitle("Nomad Passport Index Rankings",
+          subtitle = "2017") +
+  coord_map(projection = "mollweide")
 ```
 
 ![](README_files/figure-markdown_github/plot-1.png)
+
+### More graphs
+
+Let's look at the NPI rank by continent starting with Africa. We'll subset the `global_df` data frame to create a new data frame that includes only data for Africa and make a point graph of that data.
+
+``` r
+Africa_df <- global_df[global_df$continent == "Africa", ]
+
+ggplot(Africa_df, aes(x = as.factor(id), y = Rank)) +
+  geom_point(aes(colour = Rank)) +
+  scale_color_viridis(option = "plasma", direction = -1) +
+  theme_solarized(light = FALSE) +
+  theme(axis.text.x = element_text(size = 7,
+                                   angle = 45,
+                                   hjust = 1)) +
+  scale_y_continuous(limits = c(1, 200)) +
+  xlab("Country") +
+  ggtitle("Nomad Passport Index Rankings for African Countries",
+          subtitle = "2017")
+```
+
+    ## Warning: Removed 52 rows containing missing values (geom_point).
+
+![](README_files/figure-markdown_github/graph_continent-1.png)
+
+We can see the frequency of ranking by continent using a violin plot. Looking at the map above, Africa and Asia it looks like they have lower ranked passports in general than other continents.
+
+``` r
+# first remove the open ocean "continent" so it does not appear on the graph
+global_df <- global_df[global_df$continent != "Seven seas (open ocean)", ]
+
+ggplot(global_df, aes(x = as.factor(continent), y = Rank)) +
+  geom_violin(colour = "#F1F650", fill = "#F1F650") +
+  scale_fill_viridis(option = "plasma", direction = -1, discrete = TRUE) +
+   theme_solarized(light = FALSE) +
+    xlab("Continent")
+```
+
+    ## Warning: Removed 241 rows containing non-finite values (stat_ydensity).
+
+![](README_files/figure-markdown_github/violin_plots-1.png)
+
+As another way to look at the data, we can plot countries' rank by the income group. Here we'll use violin plots with points over the top.
+
+``` r
+ggplot(global_df, aes(x = income_grp, y = Rank)) +
+  geom_violin(fill = "#666666", colour = "#666666") +
+  geom_point(aes(colour = Rank)) +
+  scale_color_viridis(option = "plasma", direction = -1) +
+  theme_solarized(light = FALSE) +
+  xlab("Income Group") +
+  theme(axis.text.x = element_text(size = 7,
+                                   angle = 45,
+                                   hjust = 1))
+```
+
+    ## Warning: Removed 241 rows containing non-finite values (stat_ydensity).
+
+    ## Warning: Removed 241 rows containing missing values (geom_point).
+
+![](README_files/figure-markdown_github/gdp_rank-1.png)
+
+Wrap up
+-------
+
+There are plenty of other ways to look at the data. The Natural Earth Data include GDP, economy and subregions and the Nomad Passport Index has several factors that go into the ranking that can be included as well. I hope that you've found this useful as an example of how to extract data and join it with geographic data and visualise it.
+
+Thanks to the package maintainers for the fantastic packages that made this sort of work possible with R.
+
+References
+==========
+
+Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0. <https://CRAN.R-project.org/package=ggthemes> Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4. <https://CRAN.R-project.org/package=viridis> Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0. <https://CRAN.R-project.org/package=pdftools> H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009. Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL <http://www.jstatsoft.org/v40/i01/>. Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0. <https://CRAN.R-project.org/package=dplyr> Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0. <https://CRAN.R-project.org/package=readr>
+
+R System Information
+====================
+
+    ## R version 3.3.3 (2017-03-06)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Running under: OS X El Capitan 10.11.6
+    ## 
+    ## locale:
+    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ## [1] ggthemes_3.4.0      viridis_0.3.4       dplyr_0.5.0        
+    ## [4] ggplot2_2.2.1       rnaturalearth_0.1.0 tidyr_0.6.1        
+    ## [7] plyr_1.8.4          readr_1.0.0         pdftools_1.0       
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] Rcpp_0.12.9        knitr_1.15.1       magrittr_1.5      
+    ##  [4] maps_3.1.1         maptools_0.9-1     munsell_0.4.3     
+    ##  [7] colorspace_1.3-2   lattice_0.20-34    R6_2.2.0          
+    ## [10] stringr_1.2.0      tools_3.3.3        rgdal_1.2-5       
+    ## [13] grid_3.3.3         gtable_0.2.0       DBI_0.6           
+    ## [16] rgeos_0.3-22       htmltools_0.3.5    lazyeval_0.2.0    
+    ## [19] yaml_2.1.14        assertthat_0.1     rprojroot_1.2     
+    ## [22] digest_0.6.12      tibble_1.2         gridExtra_2.2.1   
+    ## [25] mapproj_1.2-4      evaluate_0.10      rmarkdown_1.3.9004
+    ## [28] labeling_0.3       sp_1.2-4           stringi_1.1.2     
+    ## [31] scales_0.4.1       backports_1.0.5    foreign_0.8-67
