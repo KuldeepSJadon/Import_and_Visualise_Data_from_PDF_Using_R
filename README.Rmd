@@ -141,9 +141,9 @@ Using the `extract()` function from `tidyr` we will separate column 3 into the p
 library(tidyr)
 NPI_table10 <-
   tidyr::extract(NPI_table10,
-  X3,
-  into = c("X1", "X2", "X3", "X4", "X5", "X6"),
-  regex = "([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:print:]]+)")
+                 X3,
+                 into = c("X1", "X2", "X3", "X4", "X5", "X6"),
+                 regex = "([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:print:]]+)")
 
 # name columns to match other tables
 names(NPI_table10) <- names(NPI_table1)
@@ -196,7 +196,7 @@ Now the data are completely ingested and cleaned up and we can start visualising
 Using the ROpenSci package `rnaturalearth` we can map these data.
 
 ```{r, rnaturalearth}
-# devtools::install_packages("ropensci/rnaturalearth")
+devtools::install_github("ropenscilabs/rnaturalearth")
 library(rnaturalearth)
 ```
 
@@ -269,8 +269,8 @@ ggplot(global_df, aes(long, lat)) +
   scale_fill_viridis(option = "plasma", direction = -1) +
   theme_solarized(light = FALSE) +
   theme(axis.title = element_blank(),
-      axis.text = element_blank(),
-      axis.ticks = element_blank()) +
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) +
   ggtitle("Nomad Passport Index Rankings",
           subtitle = "2017") +
   coord_map(projection = "mollweide")
@@ -291,7 +291,8 @@ ggplot(Africa_df, aes(x = as.factor(id), y = Rank)) +
   theme_solarized(light = FALSE) +
   theme(axis.text.x = element_text(size = 7,
                                    angle = 45,
-                                   hjust = 1)) +
+                                   hjust = 1,
+                                   colour = "#cccccc")) +
   scale_y_continuous(limits = c(1, 200)) +
   xlab("Country") +
   ggtitle("Nomad Passport Index Rankings for African Countries",
@@ -309,8 +310,9 @@ global_df <- global_df[global_df$continent != "Seven seas (open ocean)", ]
 ggplot(global_df, aes(x = as.factor(continent), y = Rank)) +
   geom_violin(colour = "#F1F650", fill = "#F1F650") +
   scale_fill_viridis(option = "plasma", direction = -1, discrete = TRUE) +
-   theme_solarized(light = FALSE) +
-    xlab("Continent")
+  theme_solarized(light = FALSE) +
+  theme(axis.text = element_text(colour = "#cccccc")) +
+  xlab("Continent")
 ```
 
 As another way to look at the data, we can plot countries' rank by the income group. Here we'll use violin plots with points over the top.
@@ -324,30 +326,32 @@ ggplot(global_df, aes(x = income_grp, y = Rank)) +
   xlab("Income Group") +
   theme(axis.text.x = element_text(size = 8,
                                    angle = 45,
-                                   hjust = 1))
-```
-
-## Wrap up
-
-There are plenty of other ways to look at the data. The Natural Earth Data include GDP, economy and subregions and the Nomad Passport Index has several factors that go into the ranking that can be included as well. I hope that you've found this useful as an example of how to extract data and join it with geographic data and visualise it.
-
-Thanks to the package maintainers for the fantastic packages that made this sort of work possible with R.
-
-# References
-Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0.
-  https://CRAN.R-project.org/package=ggthemes
-Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4.
-  https://CRAN.R-project.org/package=viridis
-Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0.
-  https://CRAN.R-project.org/package=pdftools
-H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009.
-Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29.     URL http://www.jstatsoft.org/v40/i01/.
-Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0.
-  https://CRAN.R-project.org/package=dplyr
-Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0.
-  https://CRAN.R-project.org/package=readr
-  
-# R System Information
-
-```{r system information, echo=FALSE}
-sessionInfo()
+                                   hjust = 1,
+                                   colour = "#cccccc"))
+        ```
+        
+        ## Wrap up
+        
+        There are plenty of other ways to look at the data. The Natural Earth Data include GDP, economy and subregions and the Nomad Passport Index has several factors that go into the ranking that can be included as well. I hope that you've found this useful as an example of how to extract data and join it with geographic data and visualise it.
+        
+        Thanks to the package maintainers for the fantastic packages that made this sort of work possible with R.
+        
+        # References
+        Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0.
+        https://CRAN.R-project.org/package=ggthemes
+        Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4.
+        https://CRAN.R-project.org/package=viridis
+        Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0.
+        https://CRAN.R-project.org/package=pdftools
+        H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009.
+        Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29.     URL http://www.jstatsoft.org/v40/i01/.
+        Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0.
+        https://CRAN.R-project.org/package=dplyr
+        Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0.
+        https://CRAN.R-project.org/package=readr
+        
+        # R System Information
+        
+        ```{r system information, echo=FALSE}
+        sessionInfo()
+        

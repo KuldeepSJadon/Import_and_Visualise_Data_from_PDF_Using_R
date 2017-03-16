@@ -38,7 +38,7 @@ NPI
 ```
 
     ##  [1] ""                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-    ##  [2] "ABOUT THIS INDEX\nNomad Capitalist was founded by perpetual traveler, entrepreneur, and investor\nAndrew Henderson in 2012 to share his “notes from the field” about living, doing\nbusiness, and investing overseas. Since then, www.nomadcapitalist.com has\nbecome the most-visited website on the topic of international diversification,\nattracting more than three million unique visitors per year.\nNomad Capitalist assists six- and seven-figure entrepreneurs to legally reduce their\nbusiness and income taxes by relocating overseas, obtain residence permits and\ncitizenships in other countries for diversification, and invest in fast-growing\ninternational markets to grow their wealth faster.\nThe Nomad Passport Index was designed to educate global citizens about the true\nvalue of the world’s citizenships. While most indexes compare only a passport\nholder’s ability to travel freely, we realized that citizens of different countries deal\nwith far different requirements to pay tax, live freely, and avoid scrutiny when\ntraveling. This index is designed to show the true value of citizenship in each\ncountry from the perspective of a high-achieving citizen who wants the freedom to\nminimize his or her tax obligations, diversify his or her wealth, and travel freely\nwithout judgment.\nMETHODOLOGY\nThe Nomad Passport Index ranks the value of citizenship in and, by extension the\npassport of, 199 countries and territories in the world based on five factors:\n• Visa-free travel - 50% of ranking\n• Taxation - 20% of ranking\n• Perception - 10% of ranking\n• Dual citizenship - 10% of ranking\n• Overall freedom - 10% of ranking\nEach country’s value in each category is given the indicated weighting to achieve a\ncountry’s total score using the formula ((Visa Free Travel x 0.5) + (Taxation x 0.2)\n+ (Perception x 0.1) + (Dual Citizenship x 0.1) + (Overall Freedom x 0.1)).\n                             1 | www.nomadcapitalist.com\n"                                                                                                                                                                                                                                                                                                                               
+    ##  [2] "ABOUT THIS INDEX\nNomad Capitalist was founded by perpetual traveler, entrepreneur, and investor\nAndrew Henderson in 2012 to share his “notes from the field” about living, doing\nbusiness, and investing overseas. Since then, www.nomadcapitalist.com has\nbecome the most-visited website on the topic of international diversification,\nattracting more than three million unique visitors per year.\nNomad Capitalist assists six- and seven-figure entrepreneurs to legally reduce their\nbusiness and income taxes by relocating overseas, obtain residence permits and\ncitizenships in other countries for diversification, and invest in fast-growing\ninternational markets to grow their wealth faster.\nThe Nomad Passport Index was designed to educate global citizens about the true\nvalue of the world’s citizenships. While most indexes compare only a passport\nholder’s ability to travel freely, we realized that citizens of different countries deal\nwith far different requirements to pay tax, live freely, and avoid scrutiny when\ntraveling. This index is designed to show the true value of citizenship in each\ncountry from the perspective of a high-achieving citizen who wants the freedom to\nminimize his or her tax obligations, diversify his or her wealth, and travel freely\nwithout judgment.\nMETHODOLOGY\nThe Nomad Passport Index ranks the value of citizenship in and, by extension the\npassport of, 199 countries and territories in the world based on five factors:\n• Visa-free travel - 50% of ranking\n• Taxation - 30% of ranking\n• Perception - 10% of ranking\n• Dual citizenship - 10% of ranking\n• Overall freedom - 10% of ranking\nEach country’s value in each category is given the indicated weighting to achieve a\ncountry’s total score using the formula ((Visa Free Travel x 0.5) + (Taxation x 0.3)\n+ (Perception x 0.1) + (Dual Citizenship x 0.1) + (Overall Freedom x 0.1)).\n                             1 | www.nomadcapitalist.com\n"                                                                                                                                                                                                                                                                                                                               
     ##  [3] "The Index is the result of aggregating data from more than one dozen sources\nbased on priorities Nomad Capitalist believes to be important to citizens of a\ncountry and to individuals considering citizenship in a given country. For more\ninformation, watch this video.\nVISA-FREE TRAVEL\nThe most important factor in the value of a passport is the travel opportunities it\naffords. The Nomad Passport Index places the highest priority on visa-free travel,\nwhich is responsible for 50% of each country’s total ranking. This index relied on\ndata from the IATA, the Henley Visa Restrictions Index, and news sources to\ndetermine each country’s score, which is the number of countries that allow visa-\nfree access or a straightforward e-visa or visa on arrival process to holders of each\ncountry’s passport. For example, Germany scores highest with 177 countries.\nTAXATION\nThe second most important factor in the value of a passport is tax freedom, which\nis responsible for 30% of each country’s total ranking. We believe that no one\nshould be forced to pay tax by virtue of their citizenship alone. This index relied on\ndata from our personal experience with clients, our network of tax advisors around\nthe world, and each country’s tax agency or embassy, to determine how non-\nresident citizens are taxed. Each country was assigned a score from 10 to 50; for\nexample, the United States and Eritrea scored lowest with 10, while Monaco and\nothers scored highest with 50:\n• 10 = citizens are taxed on their worldwide income no matter where they lived\n• 20 = citizens may avoid taxation by moving overseas, but with difficulty\n• 30 = citizens may avoid taxation by moving overseas, without much difficulty\n• 40 = citizens are not taxed on foreign source income no matter where they live\n• 50 = citizens are not taxed on any income no matter where they live\nPERCEPTION\nThe world’s perception of a country and its citizens are responsible for 10% of\neach country’s total ranking. Each country’s passport is as valuable as it is able to\nbe used freely and keep its holders safe. This index relied on the World Happiness\nReport, the Human Development Index, and subjective factors based on our\n                            2 | www.nomadcapitalist.com\n"
     ##  [4] "personal experience with clients to determine how each country and its citizens are\nreceived. Each country was assigned a score from 10 to 50. A ranking if 10 was\ngiven to countries whose citizens are refused entry to a substantial number of\ncountries and/or whose citizens encounter substantial hostility. A ranking of 50 was\ngiven to countries ranked among the happiest in the world and whose citizens\nexperience minimal hostility. Rankings of 20, 30, and 40 were given as\nintermediate rankings.\nDUAL CITIZENSHIP\nThe ability to maintain other citizenships alongside that of the ranked country is\nresponsible for 10% of each country’s total ranking. We believe that everyone\nshould be free to hold dual or multiple citizenships without restriction. This index\nrelied on data from each country’s embassy when available, various internet\nsources when not available, and our personal experiences with our global network,\nto determine how free citizens of each country are to hold other nationalities. Each\ncountry was assigned a score from 10 to 50:\n• 10 = citizens are strictly forbidden to hold other citizenships\n• 20 = citizens are forbidden to hold other citizenships, but this is often unenforced\n• 30 = citizens may hold only one other citizenship and/or other restrictions\n• 40 = citizens are often allowed to hold other citizenships\n• 50 = citizens are almost always allowed to hold other citizenships\nFREEDOM\nThe ability of citizens to live freely is responsible for 10% of each country’s total\nranking. We believe that freedom of speech and of the press is a good thing, and\nimposing laws on non-resident citizens is generally a bad idea. This index relied on\ndata regarding mandatory military service, government spying programs,\nincarceration rate, and laws targeting non-resident citizens (such as the United\nStates’ Foreign Corrupt Practices Act), as well as the World Press Freedom Index\nand Economic Freedom Index to determine how free citizens of each country are,\nparticularly non-resident citizens. Each country was assigned a score from 10 to 50\nbased on our proprietary blend of these factors, with 10 being the least free and 50\nbeing the most free.\n                              3 | www.nomadcapitalist.com\n"     
     ##  [5] "Rank  Country     VFT   T  P DC   F Total\n1     Sweden       176 30 50  50 50   109\n2     Belgium      174 30 50  50 50   108\n3(T)  Italy        175 30 40  50 50 107.5\n3(T)  Spain        175 30 40  50 50 107.5\n5     Ireland      172 30 50  50 50   107\n6(T)  Finland      175 20 50  50 50 106.5\n6(T)  Germany      177 30 40  40 40 106.5\n8(T)  Denmark      174 30 50  40 40   106\n8(T)  Switzerland  172 30 50  50 40   106\n8(T)  Luxembourg   172 30 40  50 50   106\n11(T) France       175 30 40  50 30 105.5\n11(T) New Zealand  171 30 50  50 40 105.5\n13    Portugal     172 30 30  50 50   105\n14(T) Canada       172 20 50  50 40   104\n14(T) Netherlands  174 30 50  10 50   104\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
@@ -467,9 +467,9 @@ Using the `extract()` function from `tidyr` we will separate column 3 into the p
 library(tidyr)
 NPI_table10 <-
   tidyr::extract(NPI_table10,
-  X3,
-  into = c("X1", "X2", "X3", "X4", "X5", "X6"),
-  regex = "([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:print:]]+)")
+                 X3,
+                 into = c("X1", "X2", "X3", "X4", "X5", "X6"),
+                 regex = "([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:alnum:]]+[[:space:]])([[:print:]]+)")
 
 # name columns to match other tables
 names(NPI_table10) <- names(NPI_table1)
@@ -537,7 +537,17 @@ Now the data are completely ingested and cleaned up and we can start visualising
 Using the ROpenSci package `rnaturalearth` we can map these data.
 
 ``` r
-# devtools::install_packages("ropensci/rnaturalearth")
+devtools::install_github("ropenscilabs/rnaturalearth")
+```
+
+    ## Downloading GitHub repo ropenscilabs/rnaturalearth@master
+    ## from URL https://api.github.com/repos/ropenscilabs/rnaturalearth/zipball/master
+
+    ## Installing rnaturalearth
+
+    ## '/usr/local/Cellar/r/3.3.3/R.framework/Resources/bin/R' CMD INSTALL '/private/var/folders/rd/q9rk3h4j77gd7qg9dw8_mj9m0000gn/T/RtmpwzboU1/devtoolsa95c70304a27/ropenscilabs-rnaturalearth-16abe11'
+
+``` r
 library(rnaturalearth)
 ```
 
@@ -712,8 +722,8 @@ ggplot(global_df, aes(long, lat)) +
   scale_fill_viridis(option = "plasma", direction = -1) +
   theme_solarized(light = FALSE) +
   theme(axis.title = element_blank(),
-      axis.text = element_blank(),
-      axis.ticks = element_blank()) +
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) +
   ggtitle("Nomad Passport Index Rankings",
           subtitle = "2017") +
   coord_map(projection = "mollweide")
@@ -736,7 +746,8 @@ ggplot(Africa_df, aes(x = as.factor(id), y = Rank)) +
   theme_solarized(light = FALSE) +
   theme(axis.text.x = element_text(size = 7,
                                    angle = 45,
-                                   hjust = 1)) +
+                                   hjust = 1,
+                                   colour = "#cccccc")) +
   scale_y_continuous(limits = c(1, 200)) +
   xlab("Country") +
   ggtitle("Nomad Passport Index Rankings for African Countries",
@@ -756,8 +767,9 @@ global_df <- global_df[global_df$continent != "Seven seas (open ocean)", ]
 ggplot(global_df, aes(x = as.factor(continent), y = Rank)) +
   geom_violin(colour = "#F1F650", fill = "#F1F650") +
   scale_fill_viridis(option = "plasma", direction = -1, discrete = TRUE) +
-   theme_solarized(light = FALSE) +
-    xlab("Continent")
+  theme_solarized(light = FALSE) +
+  theme(axis.text = element_text(colour = "#cccccc")) +
+  xlab("Continent")
 ```
 
 ![](README_files/figure-markdown_github/violin_plots-1.png)
@@ -773,50 +785,64 @@ ggplot(global_df, aes(x = income_grp, y = Rank)) +
   xlab("Income Group") +
   theme(axis.text.x = element_text(size = 8,
                                    angle = 45,
-                                   hjust = 1))
+                                   hjust = 1,
+                                   colour = "#cccccc"))
 ```
 
 ![](README_files/figure-markdown_github/economic_rank-1.png)
 
-Wrap up
--------
-
-There are plenty of other ways to look at the data. The Natural Earth Data include GDP, economy and subregions and the Nomad Passport Index has several factors that go into the ranking that can be included as well. I hope that you've found this useful as an example of how to extract data and join it with geographic data and visualise it.
-
-Thanks to the package maintainers for the fantastic packages that made this sort of work possible with R.
-
-References
-==========
-
-Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0. <https://CRAN.R-project.org/package=ggthemes> Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4. <https://CRAN.R-project.org/package=viridis> Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0. <https://CRAN.R-project.org/package=pdftools> H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009. Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL <http://www.jstatsoft.org/v40/i01/>. Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0. <https://CRAN.R-project.org/package=dplyr> Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0. <https://CRAN.R-project.org/package=readr>
-
-R System Information
-====================
-
-    ## R version 3.3.3 (2017-03-06)
-    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-    ## Running under: OS X El Capitan 10.11.6
-    ## 
-    ## locale:
-    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
-    ## 
-    ## attached base packages:
-    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
-    ## 
-    ## other attached packages:
-    ## [1] ggthemes_3.4.0      viridis_0.3.4       dplyr_0.5.0        
-    ## [4] ggplot2_2.2.1       rnaturalearth_0.1.0 tidyr_0.6.1        
-    ## [7] plyr_1.8.4          readr_1.0.0         pdftools_1.0       
-    ## 
-    ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.9        knitr_1.15.1       magrittr_1.5      
-    ##  [4] maps_3.1.1         maptools_0.9-1     munsell_0.4.3     
-    ##  [7] colorspace_1.3-2   lattice_0.20-34    R6_2.2.0          
-    ## [10] stringr_1.2.0      tools_3.3.3        rgdal_1.2-5       
-    ## [13] grid_3.3.3         gtable_0.2.0       DBI_0.6           
-    ## [16] rgeos_0.3-22       htmltools_0.3.5    lazyeval_0.2.0    
-    ## [19] yaml_2.1.14        assertthat_0.1     rprojroot_1.2     
-    ## [22] digest_0.6.12      tibble_1.2         gridExtra_2.2.1   
-    ## [25] mapproj_1.2-4      evaluate_0.10      rmarkdown_1.3.9004
-    ## [28] labeling_0.3       sp_1.2-4           stringi_1.1.2     
-    ## [31] scales_0.4.1       backports_1.0.5    foreign_0.8-67
+        ## Wrap up
+        
+        There are plenty of other ways to look at the data. The Natural Earth Data include GDP, economy and subregions and the Nomad Passport Index has several factors that go into the ranking that can be included as well. I hope that you've found this useful as an example of how to extract data and join it with geographic data and visualise it.
+        
+        Thanks to the package maintainers for the fantastic packages that made this sort of work possible with R.
+        
+        # References
+        Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0.
+        https://CRAN.R-project.org/package=ggthemes
+        Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4.
+        https://CRAN.R-project.org/package=viridis
+        Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0.
+        https://CRAN.R-project.org/package=pdftools
+        H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009.
+        Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29.     URL http://www.jstatsoft.org/v40/i01/.
+        Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0.
+        https://CRAN.R-project.org/package=dplyr
+        Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0.
+        https://CRAN.R-project.org/package=readr
+        
+        # R System Information
+        
+        
+        ```
+        ## R version 3.3.3 (2017-03-06)
+        ## Platform: x86_64-apple-darwin16.4.0 (64-bit)
+        ## Running under: macOS Sierra 10.12.3
+        ## 
+        ## locale:
+        ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+        ## 
+        ## attached base packages:
+        ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+        ## 
+        ## other attached packages:
+        ## [1] ggthemes_3.4.0      viridis_0.3.4       dplyr_0.5.0        
+        ## [4] ggplot2_2.2.1       rnaturalearth_0.1.0 tidyr_0.6.1        
+        ## [7] plyr_1.8.4          readr_1.0.0         pdftools_1.0       
+        ## 
+        ## loaded via a namespace (and not attached):
+        ##  [1] Rcpp_0.12.9          git2r_0.18.0         tools_3.3.3         
+        ##  [4] digest_0.6.12        pkgbuild_0.0.0.9000  pkgload_0.0.0.9000  
+        ##  [7] evaluate_0.10        memoise_1.0.0        tibble_1.2          
+        ## [10] gtable_0.2.0         lattice_0.20-34      DBI_0.6             
+        ## [13] mapproj_1.2-4        curl_2.3             yaml_2.1.14         
+        ## [16] rgdal_1.2-5          gridExtra_2.2.1      withr_1.0.2         
+        ## [19] httr_1.2.1.9000      stringr_1.2.0        knitr_1.15.1        
+        ## [22] maps_3.1.1           rgeos_0.3-22         devtools_1.12.0.9000
+        ## [25] rprojroot_1.2        grid_3.3.3           R6_2.2.0            
+        ## [28] foreign_0.8-67       rmarkdown_1.3.9004   sp_1.2-4            
+        ## [31] callr_1.0.0.9000     magrittr_1.5         backports_1.0.5     
+        ## [34] scales_0.4.1         htmltools_0.3.5      maptools_0.9-1      
+        ## [37] assertthat_0.1       colorspace_1.3-2     labeling_0.3        
+        ## [40] stringi_1.1.2        lazyeval_0.2.0       munsell_0.4.3
+        ```
