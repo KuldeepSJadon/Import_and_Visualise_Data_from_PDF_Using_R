@@ -532,7 +532,7 @@ Getting geographic data to help us visulalise these rankings
 
 Now the data are completely ingested and cleaned up and we can start visualising them.
 
-### Using `rnatualearthdata`
+### Using `rnatualearth`
 
 Using the ROpenSci package `rnaturalearth` we can map these data.
 
