@@ -442,7 +442,7 @@ NPI_table13
     ## 7    198        Iraq    30    20    10    20    10  23.0
     ## 8    199 Afghanistan    25    20    10    10    20  20.5
 
-Now we can see that NPI\_tables 4, 10 and 11 need some attention. First we will correct `NPI_table4` and `NPI_table11` by merging columns 2 and 3 on line 15 and then removing column 3.
+Now we can see that `NPI_tables 4`, `10` and `11` need some attention. First we will correct `NPI_table4` and `NPI_table11` by merging columns 2 and 3 on line 15 and then removing column 3 for `NPI_table4 and columns 2 and 3 on line 2 of`NPI\_table11\`.
 
 ``` r
 NPI_table4[15, 2] <- paste(NPI_table4[15, 2], NPI_table4[15, 3], collapse = "")
