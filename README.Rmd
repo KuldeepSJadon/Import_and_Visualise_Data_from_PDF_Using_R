@@ -115,7 +115,7 @@ NPI_table13
 
 ```
 
-Now we can see that `NPI_tables 4`, `10` and `11` need some attention. First we will correct `NPI_table4` and `NPI_table11` by merging columns 2 and 3 on line 15 and then removing column 3 for `NPI_table4 and columns 2 and 3 on line 2 of `NPI_table11`.
+Now we can see that `NPI_tables 4`, `10` and `11` need some attention. First we will correct `NPI_table4` and `NPI_table11` by merging columns 2 and 3 on line 15 and then removing column 3 for `NPI_table4` and columns 2 and 3 on line 2 of `NPI_table11`.
 
 ```{r fix_NPI_table4}
 NPI_table4[15, 2] <- paste(NPI_table4[15, 2], NPI_table4[15, 3], collapse = "")
