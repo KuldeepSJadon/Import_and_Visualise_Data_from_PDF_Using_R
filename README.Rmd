@@ -342,11 +342,18 @@ Thanks to the package maintainers for the fantastic packages that made this sort
         
 # References
 Jeffrey B. Arnold (2017). ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'. R package version 3.4.0. https://CRAN.R-project.org/package=ggthemes  
+
 Simon Garnier (2016). viridis: Default Color Maps from 'matplotlib'. R package version 0.3.4. https://CRAN.R-project.org/package=viridis  
+
 Jeroen Ooms (2016). pdftools: Text Extraction and Rendering of PDF Documents. R package version 1.0. https://CRAN.R-project.org/package=pdftools  
+
 Hadley Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009.  
-Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL http://www.jstatsoft.org/v40/i01/  
+
+Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of 
+Statistical Software, 40(1), 1-29. URL http://www.jstatsoft.org/v40/i01/  
+
 Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0. https://CRAN.R-project.org/package=dplyr  
+
 Hadley Wickham, Jim Hester and Romain Francois (2016). readr: Read Tabular Data. R package version 1.0.0. https://CRAN.R-project.org/package=readr  
         
 # R System Information
