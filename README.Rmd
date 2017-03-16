@@ -282,6 +282,8 @@ Lighter colours (smaller numbers) indicate a more desirable passport, darker col
 
 ### More graphs
 
+### Dot plot of Africa
+
 Let's look at the NPI rank by continent starting with Africa. We'll subset the `global_df` data frame to create a new data frame that includes only data for Africa and make a point graph of that data.
 
 ```{r graph_continent}
@@ -302,6 +304,10 @@ ggplot(Africa_df, aes(x = as.factor(id), y = Rank)) +
 
 
 ```
+
+Only one country in Africa breaks the top 100, South Africa, but Botswana comes close.
+
+#### Violin plots
 
 We can see the frequency of ranking by continent using a violin plot. Looking at the map above, Africa and Asia it looks like they have lower ranked passports in general than other continents.
 
